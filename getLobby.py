@@ -203,7 +203,9 @@ def lambda_handler(event, context):
                         print(f"Lobby {lobby_code} state updated to ban1_p1.")
 
                         # --- Schedule Creation Call ---
-                        create_schedule(lobby_code, 'ban1_p1', current_time, initial_duration)
+                        start_time_int = int(current_time)  # Convert to int
+                        duration_int = int(initial_duration)  # Convert to int
+                        create_schedule(lobby_code, 'ban1_p1', start_time_int, duration_int)
                         # --- End Schedule Creation Call ---
 
                     except Exception as update_error:

@@ -287,16 +287,18 @@ def lambda_handler(event, context):
 
             # Check if next state is not complete AND timer is active before scheduling
             if new_game_state != 'complete' and new_timer_state and new_timer_state.get('isActive'):
-                # Ensure values needed for create_schedule exist
+                # Ensure values needed for create_schedule exist AND convert to int
                 start_time = new_timer_state.get('startTime')
                 duration = new_timer_state.get('duration')
-                if start_time and duration:
+                if start_time is not None and duration is not None:  # Check for None before converting
+                    start_time_int = int(start_time)  # Convert Decimal to int
+                    duration_int = int(duration)   # Convert Decimal to int
                     print(f"Scheduling next timeout for state: {new_game_state}")
                     create_schedule(
                         lobby_code,
                         new_game_state,
-                        start_time,
-                        duration
+                        start_time_int,
+                        duration_int
                     )
                 else:
                     print(f"WARNING: Missing startTime or duration in new timer state for {new_game_state}. Cannot create schedule.")

@@ -204,6 +204,9 @@ def lambda_handler(event, context):
         else:
              print(f"Keeping existing timer running for state '{next_state}'.")
 
+        # Add debug logging for final values
+        print(f"DEBUG: Final values before update for state {next_state}: {json.dumps(expression_values)}")
+
         # --- Update DynamoDB ---
         # (Keep existing logic)
         try:

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pick-Ban Lobby</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Pick-Ban Lobby</h1>
+
+    <div class="section" id="joinSection"> <h2>Create or Join Lobby</h2>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+             <div style="display: flex; flex-direction: column;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="playerNameInput">Your Name:</label>
+                    <input type="text" id="playerNameInput" placeholder="Enter your name">
+                </div>
+                <div id="nameError" class="error-message">Please enter your name</div>
+            </div>
+             <div style="display: flex; flex-direction: column;">
+                 <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="lobbyCodeInput">Lobby Code:</label>
+                    <input type="text" id="lobbyCodeInput" placeholder="Enter lobby code">
+                    <button id="joinLobbyBtn">Join Lobby</button>
+                 </div>
+                 <div id="codeError" class="error-message">Please enter a lobby code</div>
+            </div>
+        </div>
+        <div style="margin-top: 15px;">
+             <button id="createLobbyBtn">Create New Lobby</button>
+         </div>
+    </div>
+
+    <div class="main-container hidden" id="lobbyView">
+        <div class="lobby-header">
+            <div class="lobby-info">
+                <div class="lobby-code">
+                    Code: <span id="lobbyCodeDisplay"></span>
+                    <button id="copyCodeBtn" class="copy-button" onclick="copyLobbyCode(document.getElementById('lobbyCodeDisplay').textContent)">Copy</button>
+                </div>
+            </div>
+            
+            <div class="ready-check-container hidden" id="readyCheckContainer">
+                <h2>Ready Check</h2>
+                <div class="player-status">
+                    <div id="player1Status">Player 1: Not Ready</div>
+                    <div id="player2Status">Player 2: Not Ready</div>
+                </div>
+                <button id="readyButton" class="ready-button">Ready</button>
+                <div id="readyPhaseTimer" class="phase-timer"></div>
+            </div>
+        </div>
+
+        <div id="gameStatusHeader" class="game-status-header">
+            <div class="game-state-info">
+                <div id="currentPhase" class="phase-title">Current Phase: Waiting</div>
+                <div id="turnIndicator" class="turn-indicator">Waiting for players...</div>
+            </div>
+        </div>
+
+        <div class="game-content">
+            <div class="player-section" id="player1Section">
+                <h3>Player 1</h3>
+                <div id="player1Name" class="player-name">None</div>
+                <div id="player1Picks" class="player-picks">
+                    <h4>Picks:</h4>
+                    <div class="picks-container"></div>
+                </div>
+            </div>
+
+            <div class="center-section">
+                <div id="globalBansSection" class="global-bans">
+                    <h4>Banned Resonators</h4>
+                    <div class="bans-container"></div>
+                </div>
+
+                <div class="pick-ban-section">
+                    <div id="timer" class="timer">Time remaining: --</div>
+                    <div id="characterContainer" class="character-grid"></div>
+                </div>
+
+                <div class="controls">
+                    <button id="deleteLobbyBtn" class="hidden">Delete Lobby</button>
+                    <button id="resetLobbyBtn" class="hidden">Reset Lobby</button>
+                    <button id="organizerJoinBtn" class="hidden">Join as Player</button>
+                    <button id="leaveLobbyBtn" class="hidden">Leave Lobby</button>
+                </div>
+            </div>
+
+            <div class="player-section" id="player2Section">
+                <h3>Player 2</h3>
+                <div id="player2Name" class="player-name">None</div>
+                <div id="player2Picks" class="player-picks">
+                    <h4>Picks:</h4>
+                    <div class="picks-container"></div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <script src="script.js"></script>
+</body>
+</html>

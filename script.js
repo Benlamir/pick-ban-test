@@ -1172,9 +1172,11 @@ function updateGamePhaseUI(data) {
 
     // --- Handle Timer Visibility ---
     if (showPickBanArea && data.timerState && data.timerState.isActive && data.timerState.startTime && data.timerState.duration) {
+        console.log(`DEBUG: Timer Active - State: ${data.gameState}, TimerState:`, data.timerState);
         startClientSideTimer(data.timerState.startTime, data.timerState.duration);
         setElementVisibility(timer, true);
     } else {
+        console.log(`DEBUG: Timer Inactive/Hidden - State: ${data.gameState}, TimerState:`, data.timerState);
         stopClientSideTimer();
         setElementVisibility(timer, false); // Hiding timer when inactive
         if(timer) timer.textContent = "Time remaining: --";

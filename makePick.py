@@ -188,21 +188,22 @@ def lambda_handler(event, context):
         else:
              return {'statusCode': 500, 'headers': headers, 'body': json.dumps({'error': 'Internal Error: Action type not set'})}
 
-        # --- Update Timer State ---
-        # (Keep existing logic, uses timer_duration)
-        if timer_duration is not None:
+        # --- Restructured Timer State Update ---
+        if next_state == 'complete':
+            # Handle 'complete' state FIRST
+            update_expression += ', timerState = :timer'
+            expression_values[':timer'] = {'startTime': None, 'duration': None, 'isActive': False}
+            print("Game complete. Deactivating timer.")
+        else:
+            # Handle all other active states (where next_state is NOT 'complete')
             current_time_ms = int(time.time() * 1000)
             update_expression += ', timerState = :timer'
+            # Ensure timer_duration is defined before this block (it should be)
             expression_values[':timer'] = {
                 'startTime': current_time_ms, 'duration': timer_duration, 'isActive': True
             }
             print(f"Updating timer for next state '{next_state}'. Start: {current_time_ms}, Duration: {timer_duration}")
-        elif next_state == 'complete':
-             update_expression += ', timerState = :timer'
-             expression_values[':timer'] = {'startTime': None, 'duration': None, 'isActive': False}
-             print("Game complete. Deactivating timer.")
-        else:
-             print(f"Keeping existing timer running for state '{next_state}'.")
+        # --- End Restructured Logic ---
 
         # Add debug logging for final values
         print(f"DEBUG: Final values before update for state {next_state}: {json.dumps(expression_values)}")

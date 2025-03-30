@@ -1030,7 +1030,7 @@ function updateTimerDisplay(endTime) {
         timerElement.classList.add('warning');
         stopClientSideTimer();
         // The backend will handle the auto-selection
-        updateLobbyData();
+        // updateLobbyData(); // <<< Temporarily commented out for debugging
     } else {
         timerElement.textContent = `Time remaining: ${seconds}s`;
         if (seconds <= 10) {

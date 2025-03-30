@@ -105,7 +105,7 @@ function clearLocalLobbyState() {
     stopPolling();
     if (timerInterval) clearInterval(timerInterval);
     if (readyCheckInterval) clearInterval(readyCheckInterval);
-    stopClientSideTimer(); // Clear the client-side timer
+    stopClientSideTimer();
     showLobbyView(false);
     updateButtonVisibility();
     lobbyCodeInput.value = "";
@@ -180,10 +180,11 @@ createLobbyBtn.addEventListener("click", async () => {
 
         if (response.ok) {
             localStorage.setItem("lobbyCode", responseData.lobbyCode);
-            localStorage.setItem("role", "organizer"); // Set role as organizer
-            localStorage.setItem("playerName", playerName); // store the name
+            localStorage.setItem("role", "organizer");
+            localStorage.setItem("playerName", playerName);
             showLobbyView(true);
             updateButtonVisibility();
+            stopPolling();
             startPolling();
             updateLobbyData();
         } else {
@@ -267,14 +268,13 @@ joinLobbyBtn.addEventListener("click", async () => {
             const data = await response.json();
             console.log("Join lobby response:", data);
             
-            // Store player information with the correct role
             localStorage.setItem("lobbyCode", lobbyCode);
             localStorage.setItem("role", playerRole);
             localStorage.setItem("playerName", playerName);
             
-            // Update UI
             showLobbyView(true);
             updateButtonVisibility();
+            stopPolling();
             startPolling();
             updateLobbyData();
         } else {
@@ -852,23 +852,37 @@ function createCharacterButtons() {
 // --- Polling Functions ---
 function startPolling() {
     console.log("startPolling called");
-    if (updateInterval) {
-        console.log("  Clearing existing interval");
-        clearInterval(updateInterval);
-    }
-    updateLobbyData(); // Update immediately when starting polling
-    updateInterval = setInterval(() => {
-        //console.log("  Polling interval tick"); // Can be noisy, uncomment for debugging
+    // Always stop any existing polling first
+    stopPolling();
+    
+    try {
+        // Update immediately when starting polling
         updateLobbyData();
-    }, 3000); // Increased interval slightly to 3 seconds
-    console.log("  Polling interval set");
+        
+        // Set up new polling interval
+        updateInterval = setInterval(() => {
+            try {
+                updateLobbyData();
+            } catch (error) {
+                console.error("Error during polling update:", error);
+                // Don't stop polling on error, just log it
+            }
+        }, 3000); // 3 second interval
+        
+        console.log("  Polling interval set successfully");
+    } catch (error) {
+        console.error("Error setting up polling:", error);
+        // If we fail to set up polling, ensure we clean up
+        stopPolling();
+        throw error;
+    }
 }
 
 function stopPolling() {
     console.log("stopPolling called");
     if (updateInterval) {
         clearInterval(updateInterval);
-        updateInterval = null;
+        updateInterval = null; // Clear the reference
     }
 }
 

@@ -4,10 +4,67 @@ import json
 import boto3
 import os
 import time
+import datetime # Added for schedule creation
 from decimal import Decimal
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table(os.environ.get('TABLE_NAME', 'YourTableNameDefault'))
+scheduler = boto3.client('scheduler') # Added for schedule creation
+handle_timeout_lambda_arn = os.environ.get('HANDLE_TIMEOUT_LAMBDA_ARN', '') # Added for schedule creation
+lambda_role_arn = os.environ.get('LAMBDA_EXECUTION_ROLE_ARN', '') # Added for schedule creation
+
+def create_schedule(lobby_code, game_state, start_time_ms, duration_ms):
+    """Creates the EventBridge schedule for the next timeout."""
+    schedule_name = f"timeout-{lobby_code}-{game_state}"
+    if not handle_timeout_lambda_arn or not lambda_role_arn:
+         print("ERROR: Lambda ARN or Role ARN environment variables not set. Cannot create schedule.")
+         return None
+
+    expiration_time_seconds = (start_time_ms + duration_ms) / 1000
+    schedule_trigger_time_seconds = expiration_time_seconds + 2 # 2 sec buffer
+
+    schedule_dt_utc = datetime.datetime.fromtimestamp(schedule_trigger_time_seconds, tz=datetime.timezone.utc)
+    schedule_time_str = schedule_dt_utc.strftime('%Y-%m-%dT%H:%M:%S')
+
+    try:
+        payload = json.dumps({
+            'lobbyCode': lobby_code,
+            'expectedGameState': game_state # The state that just started
+        })
+        print(f"Attempting to create schedule: {schedule_name} at {schedule_time_str} targeting {handle_timeout_lambda_arn}")
+
+        response = scheduler.create_schedule(
+            Name=schedule_name,
+            GroupName='default', # Use default group or create one if needed
+            ActionAfterCompletion='DELETE',
+            FlexibleTimeWindow={'Mode': 'OFF'},
+            ScheduleExpression=f'at({schedule_time_str})',
+            State='ENABLED',
+            Target={
+                'Arn': handle_timeout_lambda_arn, # ARN of handleTimeout Lambda
+                'RoleArn': lambda_role_arn,      # Execution role ARN passed to scheduler
+                'Input': payload
+            }
+        )
+        print(f"Successfully created schedule: {schedule_name} for time {schedule_time_str}")
+        return schedule_name
+    except scheduler.exceptions.ConflictException:
+         print(f"Schedule {schedule_name} already exists. Assuming it's okay.")
+         return schedule_name
+    except Exception as e:
+        print(f"ERROR creating schedule {schedule_name}: {str(e)}")
+        return None
+
+def delete_schedule(lobby_code, game_state):
+    schedule_name = f"timeout-{lobby_code}-{game_state}"
+    try:
+        print(f"Attempting to delete schedule: {schedule_name}")
+        scheduler.delete_schedule(Name=schedule_name, GroupName='default') # Specify GroupName if not default
+        print(f"Successfully deleted schedule: {schedule_name}")
+    except scheduler.exceptions.ResourceNotFoundException:
+        print(f"Schedule {schedule_name} not found for deletion (normal).")
+    except Exception as e:
+        print(f"ERROR deleting schedule {schedule_name}: {str(e)}")
 
 def decimal_to_int(obj):
     """Helper to convert Decimal for JSON."""
@@ -205,11 +262,15 @@ def lambda_handler(event, context):
             print(f"Updating timer for next state '{next_state}'. Start: {current_time_ms}, Duration: {timer_duration}")
         # --- End Restructured Logic ---
 
+        # --- Schedule Deletion Call ---
+        # Delete the schedule for the state that just finished
+        delete_schedule(lobby_code, current_state) # current_state holds the state before this action
+        # --- End Schedule Deletion Call ---
+
         # Add debug logging for final values
         print(f"DEBUG: Final values before update for state {next_state}: {json.dumps(expression_values)}")
 
         # --- Update DynamoDB ---
-        # (Keep existing logic)
         try:
             update_result = table.update_item(
                 Key={'lobbyCode': lobby_code},
@@ -218,8 +279,32 @@ def lambda_handler(event, context):
                 ReturnValues='ALL_NEW'
             )
             updated_item = update_result.get('Attributes', {})
-            print(f"DynamoDB update successful. New state: {updated_item}")
-            # (Keep existing return success logic)
+            print(f"DynamoDB update successful. New state: {updated_item.get('gameState')}")
+
+            # --- Schedule Creation Call (if needed) ---
+            new_game_state = updated_item.get('gameState')
+            new_timer_state = updated_item.get('timerState')
+
+            # Check if next state is not complete AND timer is active before scheduling
+            if new_game_state != 'complete' and new_timer_state and new_timer_state.get('isActive'):
+                # Ensure values needed for create_schedule exist
+                start_time = new_timer_state.get('startTime')
+                duration = new_timer_state.get('duration')
+                if start_time and duration:
+                    print(f"Scheduling next timeout for state: {new_game_state}")
+                    create_schedule(
+                        lobby_code,
+                        new_game_state,
+                        start_time,
+                        duration
+                    )
+                else:
+                    print(f"WARNING: Missing startTime or duration in new timer state for {new_game_state}. Cannot create schedule.")
+
+            elif new_game_state == 'complete':
+                print("Game complete, not scheduling further timeouts.")
+            # --- End Schedule Creation Call ---
+
             return {
                 'statusCode': 200,
                 'headers': headers,

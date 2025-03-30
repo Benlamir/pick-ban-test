@@ -2,16 +2,62 @@ import json
 import boto3
 import os
 import time
+import datetime # Added for schedule creation
 from decimal import Decimal
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table(os.environ['TABLE_NAME'])
+scheduler = boto3.client('scheduler') # Added for schedule creation
+handle_timeout_lambda_arn = os.environ.get('HANDLE_TIMEOUT_LAMBDA_ARN', '') # Added for schedule creation
+lambda_role_arn = os.environ.get('LAMBDA_EXECUTION_ROLE_ARN', '') # Added for schedule creation
 
 def decimal_to_int(obj):
     """Convert Decimal objects to integers for JSON serialization."""
     if isinstance(obj, Decimal):
         return int(obj)
     raise TypeError
+
+def create_schedule(lobby_code, game_state, start_time_ms, duration_ms):
+    """Creates the EventBridge schedule for the next timeout."""
+    schedule_name = f"timeout-{lobby_code}-{game_state}"
+    if not handle_timeout_lambda_arn or not lambda_role_arn:
+         print("ERROR: Lambda ARN or Role ARN environment variables not set. Cannot create schedule.")
+         return None
+
+    expiration_time_seconds = (start_time_ms + duration_ms) / 1000
+    schedule_trigger_time_seconds = expiration_time_seconds + 2 # 2 sec buffer
+
+    schedule_dt_utc = datetime.datetime.fromtimestamp(schedule_trigger_time_seconds, tz=datetime.timezone.utc)
+    schedule_time_str = schedule_dt_utc.strftime('%Y-%m-%dT%H:%M:%S')
+
+    try:
+        payload = json.dumps({
+            'lobbyCode': lobby_code,
+            'expectedGameState': game_state # The state that just started
+        })
+        print(f"Attempting to create schedule: {schedule_name} at {schedule_time_str} targeting {handle_timeout_lambda_arn}")
+
+        response = scheduler.create_schedule(
+            Name=schedule_name,
+            GroupName='default', # Use default group or create one if needed
+            ActionAfterCompletion='DELETE',
+            FlexibleTimeWindow={'Mode': 'OFF'},
+            ScheduleExpression=f'at({schedule_time_str})',
+            State='ENABLED',
+            Target={
+                'Arn': handle_timeout_lambda_arn, # ARN of handleTimeout Lambda
+                'RoleArn': lambda_role_arn,      # Execution role ARN passed to scheduler
+                'Input': payload
+            }
+        )
+        print(f"Successfully created schedule: {schedule_name} for time {schedule_time_str}")
+        return schedule_name
+    except scheduler.exceptions.ConflictException:
+         print(f"Schedule {schedule_name} already exists. Assuming it's okay.")
+         return schedule_name
+    except Exception as e:
+        print(f"ERROR creating schedule {schedule_name}: {str(e)}")
+        return None
 
 def lambda_handler(event, context):
     headers = {
@@ -140,18 +186,33 @@ def lambda_handler(event, context):
                     # Both players are ready, start the game
                     print("Both players ready, updating game state to ban1_p1")
                     current_time = int(time.time() * 1000)
-                    table.update_item(
-                        Key={'lobbyCode': lobby_code},
-                        UpdateExpression='SET gameState = :state, timerState = :timer',
-                        ExpressionAttributeValues={
-                            ':state': 'ban1_p1',
-                            ':timer': {
-                                'startTime': current_time,
-                                'duration': 30000,
-                                'isActive': True
+                    initial_duration = 30000  # 30 seconds
+                    try:
+                        table.update_item(
+                            Key={'lobbyCode': lobby_code},
+                            UpdateExpression='SET gameState = :state, timerState = :timer',
+                            ExpressionAttributeValues={
+                                ':state': 'ban1_p1',
+                                ':timer': {
+                                    'startTime': current_time,
+                                    'duration': initial_duration,
+                                    'isActive': True
+                                }
                             }
+                        )
+                        print(f"Lobby {lobby_code} state updated to ban1_p1.")
+
+                        # --- Schedule Creation Call ---
+                        create_schedule(lobby_code, 'ban1_p1', current_time, initial_duration)
+                        # --- End Schedule Creation Call ---
+
+                    except Exception as update_error:
+                        print(f"ERROR updating lobby to start game: {update_error}")
+                        return {
+                            'statusCode': 500,
+                            'headers': headers,
+                            'body': json.dumps({'error': f'Failed to start game: {str(update_error)}'})
                         }
-                    )
                 
                 return {
                     'statusCode': 200,

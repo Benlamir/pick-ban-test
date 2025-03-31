@@ -548,7 +548,7 @@ button {
 
 .game-content {
     display: grid;
-    grid-template-columns: 350px 1fr 350px;    /* Increased from 250px */
+    grid-template-columns: 1000px 1fr 1000px;    /* Increased from 250px */
     gap: 2rem;
     align-items: start;
     width: 100%;
@@ -777,6 +777,7 @@ button {
     background: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     min-height: 100px;
+    justify-content: center;
 }
 
 .picks-container img {
@@ -825,14 +826,14 @@ button {
 
 /* Specific size for Player Pick Placeholders */
 .pick-placeholder {
-  width: 100px;  /* Increased from 80px */
-  height: 150px; /* Increased from 120px */
+  width: 225px;  /* Increased from 80px */
+  height: 450px; /* Increased from 120px */
 }
 
 /* Specific size for Ban Placeholders */
 .ban-placeholder {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
 }
 
 /* Neutral pulse animation for active placeholders */

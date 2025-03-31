@@ -814,10 +814,15 @@ function displayBans(bans) {
 // --- Function to update character button styles ---
 function updateCharacterButtonStyles(picks, bans) {
     const buttons = document.querySelectorAll('.character-button');
+    
+    // First, re-enable all buttons
+    buttons.forEach(button => {
+        button.disabled = false;
+    });
+
     buttons.forEach(button => {
         const resonatorId = button.dataset.resonatorId;
         button.classList.remove('picked-p1', 'picked-p2', 'banned');
-        button.disabled = false;
 
         if (bans && bans.includes(resonatorId)) {
             button.classList.add('banned');
@@ -1031,6 +1036,13 @@ function updateTimerDisplay(endTime) {
         stopClientSideTimer();
         // The backend will handle the auto-selection
         // updateLobbyData(); // <<< Temporarily commented out for debugging
+
+        // Disable all character buttons when timer expires
+        console.log("DEBUG: Timer expired, disabling character buttons.");
+        const buttons = document.querySelectorAll('#characterContainer .character-button');
+        buttons.forEach(button => {
+            button.disabled = true;
+        });
     } else {
         timerElement.textContent = `Time remaining: ${seconds}s`;
         if (seconds <= 10) {

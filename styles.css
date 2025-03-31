@@ -166,8 +166,7 @@ button {
     padding: 2rem;
     border-radius: 15px;
     margin-top: 2rem;
-    display: block;
-    max-width: 1400px;
+    display: block; 
     margin-left: auto;
     margin-right: auto;
 }
@@ -549,7 +548,7 @@ button {
 
 .game-content {
     display: grid;
-    grid-template-columns: 250px 1fr 250px;
+    grid-template-columns: 350px 1fr 350px;    /* Increased from 250px */
     gap: 2rem;
     align-items: start;
     width: 100%;
@@ -747,7 +746,6 @@ button {
 .player-section.active-turn {
     border: 3px solid #4CAF50;
     box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
-    background-color: rgba(76, 175, 80, 0.1);
 }
 
 .player-name {
@@ -816,48 +814,72 @@ button {
 
 .pick-placeholder,
 .ban-placeholder {
-  background-color: rgba(255, 255, 255, 0.08); /* Slightly different background */
+  background-color: rgba(255, 255, 255, 0.08);
   border: 1px dashed rgba(255, 255, 255, 0.3);
-  border-radius: 8px; /* Match image border-radius */
+  border-radius: 8px;
   box-sizing: border-box;
-  display: inline-block; /* Or flex-basis if container requires */
-  vertical-align: top; /* Align with potential images */
-  transition: all 0.3s ease; /* Add transition for active state */
+  display: inline-block;
+  vertical-align: top;
+  transition: all 0.3s ease;
 }
 
-/* Specific size for Player Pick Placeholders (matches .picks-container img) */
+/* Specific size for Player Pick Placeholders */
 .pick-placeholder {
-  width: 60px;
-  height: 60px;
+  width: 100px;  /* Increased from 80px */
+  height: 150px; /* Increased from 120px */
 }
 
-/* Specific size for Ban Placeholders (matches .global-bans .bans-container img) */
+/* Specific size for Ban Placeholders */
 .ban-placeholder {
   width: 50px;
   height: 50px;
 }
 
-/* Style for the active placeholder (will be added/removed by JS) */
+/* Neutral pulse animation for active placeholders */
+@keyframes neutralPulse {
+  0% {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+  100% {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Style for the active placeholder with neutral pulse */
 .pick-placeholder.active,
 .ban-placeholder.active {
-  border: 2px solid #4CAF50; /* Bright border */
-  box-shadow: 0 0 8px rgba(76, 175, 80, 0.6); /* Subtle glow */
-  background-color: rgba(76, 175, 80, 0.15); /* Slight background tint */
+  animation: neutralPulse 1.5s infinite ease-in-out;
 }
 
 /* Ensure placeholders align correctly within flex containers */
-.picks-container,
-.bans-container {
-  /* Keep existing styles (display: flex, gap, etc.) */
-  align-items: center; /* Vertically center items if needed */
+.picks-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  min-height: 152px; /* Increased to match new placeholder height */
+  align-items: center;
 }
 
-/* Optional: Ensure containers have minimum height even when empty */
-.picks-container {
-    min-height: 62px; /* pick-placeholder height + border */
-}
 .bans-container {
-    min-height: 52px; /* ban-placeholder height + border */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  min-height: 52px;
+  align-items: center;
 }
 
 /* --- End Placeholder Styles --- */

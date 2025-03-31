@@ -1,6 +1,7 @@
 // script.js
 
 const apiBaseUrl = "https://ilzcew85i3.execute-api.us-east-1.amazonaws.com/dev"; // Your API URL
+const ICON_BASE_URL = "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/icons/";
 let updateInterval; // Store the interval ID globally
 let resonators = []; // Initialize as empty array
 let timerInterval;
@@ -9,6 +10,76 @@ let clientSideTimerInterval = null; // Variable to hold the interval ID for clie
 const READY_CHECK_INTERVAL = 3000; // Check ready status every 3 seconds
 const GAME_START_COUNTDOWN = 5; // 5 second countdown before game starts
 let isCurrentTurnTimedOut = false; // Flag to track local timeout state
+
+// --- Filter Functions ---
+
+function createFilterControls() {
+    const filterContainer = document.getElementById('filterContainer');
+    if (!filterContainer || !resonators || resonators.length === 0) {
+        console.warn("Filter container not found or resonators not loaded.");
+        return;
+    }
+
+    // Clear any existing filters
+    filterContainer.innerHTML = '';
+
+    // Get unique element types from resonators data
+    const elements = [...new Set(resonators.map(r => r.element))].sort();
+
+    // 1. Create "All" Filter Tab
+    const allFilter = document.createElement('div');
+    allFilter.classList.add('filter-item', 'filter-text', 'active'); // Active by default
+    allFilter.dataset.filter = 'All';
+    allFilter.textContent = 'All';
+    allFilter.title = 'Show All Resonators';
+    allFilter.addEventListener('click', handleFilterClick);
+    filterContainer.appendChild(allFilter);
+
+    // 2. Create Element Icon Filters
+    elements.forEach(element => {
+        const filterItem = document.createElement('div');
+        filterItem.classList.add('filter-item');
+        filterItem.dataset.filter = element; // Store element name (e.g., "Glacio")
+        filterItem.title = `Filter by: ${element}`; // Tooltip
+
+        const img = document.createElement('img');
+        img.classList.add('filter-icon');
+        // Construct URL using base path and lowercase element name
+        img.src = `${ICON_BASE_URL}${element.toLowerCase()}.webp`;
+        img.alt = element;
+
+        filterItem.appendChild(img);
+        filterItem.addEventListener('click', handleFilterClick);
+        filterContainer.appendChild(filterItem);
+    });
+}
+
+function handleFilterClick(event) {
+    const selectedFilter = event.currentTarget.dataset.filter;
+
+    // Update active class on filter items
+    const allFilterItems = document.querySelectorAll('#filterContainer .filter-item');
+    allFilterItems.forEach(item => {
+        item.classList.toggle('active', item.dataset.filter === selectedFilter);
+    });
+
+    // Apply the filter to the character grid
+    applyFilter(selectedFilter);
+}
+
+function applyFilter(filterValue) {
+    const buttons = document.querySelectorAll('#characterContainer .character-button');
+    buttons.forEach(button => {
+        const buttonElement = button.dataset.element;
+        if (filterValue === 'All' || buttonElement === filterValue) {
+            button.style.display = ''; // Show button (reset to default display)
+        } else {
+            button.style.display = 'none'; // Hide button
+        }
+    });
+}
+
+// --- End Filter Functions ---
 
 // Get references to all necessary HTML elements
 const createLobbyBtn = document.getElementById("createLobbyBtn");
@@ -881,13 +952,21 @@ function updateCharacterButtonStyles(picks, bans) {
 
 // --- Function to create character buttons ---
 function createCharacterButtons() {
-    if (!characterContainer) return;
-    characterContainer.innerHTML = ''; // Clear existing buttons
+    if (!characterContainer || !resonators || resonators.length === 0) {
+        console.warn("Character container not found or resonators not loaded.");
+        return;
+    }
+
+    // Clear existing buttons
+    characterContainer.innerHTML = '';
+
+    // Create buttons for each resonator
     resonators.forEach(resonator => {
         const button = document.createElement('button');
         button.classList.add('character-button');
         button.style.backgroundImage = `url(${resonator.image})`;
         button.dataset.resonatorId = resonator.id;
+        button.dataset.element = resonator.element; // Add element data attribute
         button.title = resonator.name;
         button.addEventListener('click', () => makePick(resonator.id));
         characterContainer.appendChild(button);
@@ -933,113 +1012,36 @@ function stopPolling() {
 
 // --- Initial Page Load Setup ---
 async function initializePage() {
-    console.log("initializePage called");
-
-    let isWindowClosing = false;
-
-    // Add beforeunload event listener for cleanup
-    window.addEventListener('beforeunload', async (event) => {
-        const lobbyCode = localStorage.getItem("lobbyCode");
-        const role = localStorage.getItem("role");
-        const playerName = localStorage.getItem("playerName");
-
-        if (lobbyCode && role && playerName) {
-            try {
-                // For regular players, leave the lobby
-                if (role === 'player1' || role === 'player2') {
-                    await fetch(`${apiBaseUrl}/lobbies/${lobbyCode}/leave`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ player: role }),
-                        keepalive: true
-                    });
-                }
-                // For organizer or organizer-player, delete the lobby
-                else if (role === 'organizer' || role === 'organizer_player') {
-                    await fetch(`${apiBaseUrl}/lobbies/${lobbyCode}`, {
-                        method: "DELETE",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ playerName: playerName }),
-                        keepalive: true
-                    });
-                }
-                isWindowClosing = true;
-            } catch (error) {
-                console.error("Error during cleanup:", error);
-            }
-        }
-    });
-
-    // Add unload event listener for localStorage cleanup
-    window.addEventListener('unload', (event) => {
-        if (isWindowClosing) {
-            localStorage.removeItem("lobbyCode");
-            localStorage.removeItem("role");
-            localStorage.removeItem("playerName");
-        }
-    });
-
-    // Load Resonator data first
     try {
+        // Load resonators data
         const response = await fetch('resonators.json');
         if (!response.ok) {
             throw new Error(`Failed to load resonators.json: ${response.status}`);
         }
         resonators = await response.json();
-        createCharacterButtons(); // Create buttons once data is loaded
-    } catch (error) {
-        console.error("Error loading resonators:", error);
-        return; // Stop initialization
-    }
+        
+        // Create filter controls and character buttons
+        createFilterControls();
+        createCharacterButtons();
 
-    // Now check lobby state
-    const lobbyCode = localStorage.getItem("lobbyCode");
-    const role = localStorage.getItem("role");
-    const playerName = localStorage.getItem("playerName");
-    console.log("  Initial Lobby Code:", lobbyCode);
-
-    if (lobbyCode && role && playerName) {
-        try {
-            // Check if the player's slot still exists in the lobby
-            const lobbyResponse = await fetch(`${apiBaseUrl}/lobbies/${lobbyCode}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" },
-            });
-
-            if (!lobbyResponse.ok) {
-                // If lobby doesn't exist or other error, clear local state
-                clearLocalLobbyState();
-                return;
+        // Check for existing lobby code in localStorage
+        const savedLobbyCode = localStorage.getItem("lobbyCode");
+        if (savedLobbyCode) {
+            // If there's a saved lobby code, try to join that lobby
+            const playerName = localStorage.getItem("playerName");
+            if (playerName) {
+                playerNameInput.value = playerName;
+                lobbyCodeInput.value = savedLobbyCode;
+                await joinLobby(savedLobbyCode, playerName);
             }
-
-            const lobbyData = await lobbyResponse.json();
-            
-            // Check if the player's slot matches their role
-            if (role === 'player1' && lobbyData.player1 !== playerName) {
-                clearLocalLobbyState();
-                return;
-            }
-            if (role === 'player2' && lobbyData.player2 !== playerName) {
-                clearLocalLobbyState();
-                return;
-            }
-            if ((role === 'organizer' || role === 'organizer_player') && lobbyData.organizerName !== playerName) {
-                clearLocalLobbyState();
-                return;
-            }
-
-            // If we get here, the player's slot is still valid
-            showLobbyView(true);
-            startPolling();
-            updateLobbyData();
-        } catch (error) {
-            console.error("Error checking lobby state:", error);
-            clearLocalLobbyState();
         }
-    } else {
-        showLobbyView(false);
+
+        // Add event listeners
+        // setupEventListeners();
+    } catch (error) {
+        console.error("Error initializing page:", error);
+        alert("Failed to initialize the page. Please refresh and try again.");
     }
-    updateButtonVisibility(); // Set initial button visibility
 }
 
 // --- Timer Management Functions ---

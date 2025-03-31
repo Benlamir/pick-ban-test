@@ -331,7 +331,7 @@ button {
 
 #characterContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust minmax if needed */
+    grid-template-columns: repeat(auto-fit, 100px); /* Use fixed 100px columns */
     gap: 1rem; /* Adjust as needed */
     padding: 1rem; /* Adjust as needed */
     background: rgba(0, 0, 0, 0.2); /* Keep existing style */
@@ -579,10 +579,90 @@ button {
 }
 
 .pick-ban-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    margin: 1rem 0;
+}
+
+/* --- Filter Container Styles --- */
+
+#filterContainer {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens if needed */
+  justify-content: center; /* Center the filter items */
+  align-items: center;
+  gap: 1rem; /* Space between filter items */
+  margin-bottom: 1.5rem; /* Space below the filter bar (adjust as needed) */
+  padding: 0.5rem;
+  width: 100%; /* Take full width within its parent */
+  box-sizing: border-box;
+}
+
+/* Common style for all filter items (text and icons) */
+.filter-item {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, opacity 0.3s ease, border-color 0.3s ease;
+  opacity: 0.7; /* Make non-active items slightly faded */
+  border: 1px solid transparent; /* Add transparent border to prevent layout shift on hover/active */
+  display: flex; /* To help center content like icons */
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.05); /* Subtle background */
+}
+
+/* Style for the "All" text filter */
+.filter-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  padding: 0.5rem 0.8rem; /* Slightly more horizontal padding for text */
+}
+
+/* Style for the element icon filters */
+.filter-icon {
+  width: 32px;  /* Adjust size as needed */
+  height: 32px;
+  object-fit: contain; /* Scale icon while preserving aspect ratio */
+  display: block; /* Ensure image behaves like a block */
+}
+
+/* Style for the currently active/selected filter */
+.filter-item.active {
+  opacity: 1; /* Fully opaque */
+  background-color: rgba(255, 255, 255, 0.15); /* Slightly brighter background */
+  border-color: rgba(255, 255, 255, 0.5); /* Add a subtle border */
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+/* Optional: Hover effect for non-active items */
+.filter-item:not(.active):hover {
+    opacity: 0.9;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --- End Filter Container Styles --- */
+
+.pick-placeholder,
+.ban-placeholder {
+    width: 80px;
+    height: 80px;
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
-    padding: 1.5rem;
-    margin-top: 0;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .character-grid {

@@ -336,9 +336,11 @@ button {
     padding: 1rem; /* Adjust as needed */
     background: rgba(0, 0, 0, 0.2); /* Keep existing style */
     border-radius: 12px; /* Keep existing style */
-
     width: 100%; /* Force the container to take full available width */
     box-sizing: border-box; /* Include padding/border in the element's total width */
+    max-height: 400px;   /* Set a max height */
+    overflow-y: auto;    /* Add vertical scrollbar if content exceeds max-height */
+    padding-right: 0.5rem; /* Add space for scrollbar */
 }
 
 .character-button {

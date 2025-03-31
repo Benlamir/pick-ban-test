@@ -1,250 +1,250 @@
 [
-    {
-        "id": "resonator_id_1",
-        "name": "Jiyan",
-        "image": "https://pick-ban-test-2023-10-27.s3-website-us-east-1.amazonaws.com/images/jiyan.png",
-        "rarity": 5,
-        "element": "Aero",
-        "weapon": "Broadblade"
-    },
-    {
-      "id": "resonator_id_4",
+  {
+      "id": "resonator_id_1",
+      "name": "Jiyan",
+      "image": "https://pick-ban-test-2023-10-27.s3-website-us-east-1.amazonaws.com/images/jiyan.png",
+      "rarity": 5,
+      "element": "Aero",
+      "weapon": "Broadblade"
+  },
+  {
+      "id": "resonator_id_2",
       "name": "Lingyang",
       "image": "https://pick-ban-test-2023-10-27.s3-website-us-east-1.amazonaws.com/images/lingyang.png",
       "rarity": 5,
-       "element": "Glacio",
-        "weapon": "Gauntlets"
-    },
-    {
-        "id": "resonator_id_1",
-        "name": "Rover (Spectro)",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/7/7b/Character_Rover_Spectro.png/256px-Character_Rover_Spectro.png",
-        "rarity": 5,
-        "element": "Spectro",
-        "weapon": "Sword"
-      },
-      {
-        "id": "resonator_id_2",
-        "name": "Yangyang",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/8/87/Character_Yangyang.png/256px-Character_Yangyang.png",
-        "rarity": 4,
-        "element": "Aero",
-        "weapon": "Sword"
-      },
-      {
-        "id": "resonator_id_3",
-        "name": "Chixia",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/a/a9/Character_Chixia.png/256px-Character_Chixia.png",
-        "rarity": 4,
-        "element": "Fusion",
-        "weapon": "Pistols"
-      },
-      {
-        "id": "resonator_id_4",
-        "name": "Baizhi",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/5/53/Character_Baizhi.png/256px-Character_Baizhi.png",
-        "rarity": 4,
-        "element": "Glacio",
-        "weapon": "Rectifier"
-      },
-      {
-        "id": "resonator_id_5",
-        "name": "Sanhua",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/3/33/Character_Sanhua.png/256px-Character_Sanhua.png",
-        "rarity": 4,
-        "element": "Glacio",
-        "weapon": "Sword"
-      },
-      {
-        "id": "resonator_id_6",
-        "name": "Yuanwu",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Yuanwu.png/256px-Character_Yuanwu.png",
-        "rarity": 4,
-        "element": "Electro",
-        "weapon": "Gauntlets"
-      },
-      {
-        "id": "resonator_id_7",
-        "name": "Aalto",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/c/c9/Character_Aalto.png/256px-Character_Aalto.png",
-        "rarity": 4,
-        "element": "Aero",
-        "weapon": "Pistols"
-      },
-      {
-        "id": "resonator_id_8",
-        "name": "Danjin",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/e/e0/Character_Danjin.png/256px-Character_Danjin.png",
-        "rarity": 4,
-        "element": "Havoc",
-        "weapon": "Sword"
-      },
-      {
-        "id": "resonator_id_9",
-        "name": "Mortefi",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/a/a2/Character_Mortefi.png/256px-Character_Mortefi.png",
-        "rarity": 4,
-        "element": "Fusion",
-        "weapon": "Pistols"
-      },
-      {
-        "id": "resonator_id_10",
-        "name": "Taoqi",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/c/c2/Character_Taoqi.png/256px-Character_Taoqi.png",
-        "rarity": 4,
-        "element": "Havoc",
-        "weapon": "Broadblade"
-      },
-      {
-        "id": "resonator_id_11",
-        "name": "Calcharo",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/4/4b/Character_Calcharo.png/256px-Character_Calcharo.png",
-        "rarity": 5,
-        "element": "Electro",
-        "weapon": "Broadblade"
-      },
-      {
-        "id": "resonator_id_12",
-        "name": "Encore",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/9/95/Character_Encore.png/256px-Character_Encore.png",
-        "rarity": 5,
-        "element": "Fusion",
-        "weapon": "Rectifier"
-      },
-      {
-        "id": "resonator_id_13",
-        "name": "Jianxin",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/2/25/Character_Jianxin.png/256px-Character_Jianxin.png",
-        "rarity": 5,
-        "element": "Aero",
-        "weapon": "Gauntlets"
-      },
-      {
-        "id": "resonator_id_14",
-        "name": "Lingyang",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/9/91/Character_Lingyang.png/256px-Character_Lingyang.png",
-        "rarity": 5,
-        "element": "Glacio",
-        "weapon": "Gauntlets"
-      },
-      {
-        "id": "resonator_id_15",
-        "name": "Verina",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/a/a9/Character_Verina.png/256px-Character_Verina.png",
-        "rarity": 5,
-        "element": "Spectro",
-        "weapon": "Rectifier"
-      },
-      {
-        "id": "resonator_id_17",
-        "name": "Yinlin",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/5/52/Character_Yinlin.png/256px-Character_Yinlin.png",
-        "rarity": 5,
-        "element": "Electro",
-        "weapon": "Rectifier"
-      },
-        {
-        "id": "resonator_id_18",
-        "name": "Rover (Havoc)",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/8/87/Character_Rover_Havoc.png/256px-Character_Rover_Havoc.png",
-        "rarity": 5,
-        "element": "Havoc",
-        "weapon": "Sword"
-      },
-        {
-        "id": "resonator_id_19",
-        "name": "Jinhsi",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/a/a2/Character_Jinhsi.png/256px-Character_Jinhsi.png",
-        "rarity": 5,
-        "element": "Spectro",
-        "weapon": "Sword"
-      },
-        {
-        "id": "resonator_id_20",
-        "name": "Changli",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/c/c2/Character_Changli.png/256px-Character_Changli.png",
-        "rarity": 5,
-        "element": "Fusion",
-        "weapon": "Gauntlets"
-      },
-        {
-        "id": "resonator_id_21",
-        "name": "Zhezhi",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/e/e0/Character_Zhezhi.png/256px-Character_Zhezhi.png",
-        "rarity": 5,
-        "element": "Glacio",
-        "weapon": "Rectifier"
-      },
-        {
-        "id": "resonator_id_22",
-        "name": "Xiangli Yao",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Xiangli_Yao.png/256px-Character_Xiangli_Yao.png",
-        "rarity": 5,
-        "element": "Electro",
-        "weapon": "Pistols"
-      },
-        {
-        "id": "resonator_id_23",
-        "name": "The Shorekeeper",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/5/53/Character_The_Shorekeeper.png/256px-Character_The_Shorekeeper.png",
-        "rarity": 5,
-        "element": "Spectro",
-        "weapon": "Rectifier"
-      },
-        {
-        "id": "resonator_id_24",
-        "name": "Youhu",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/a/a9/Character_Youhu.png/256px-Character_Youhu.png",
-        "rarity": 4,
-        "element": "Glacio",
-        "weapon": "Gauntlets"
-      },
-        {
-        "id": "resonator_id_25",
-        "name": "Camellya",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/3/33/Character_Camellya.png/256px-Character_Camellya.png",
-        "rarity": 5,
-        "element": "Havoc",
-        "weapon": "Pistols"
-      },
-        {
-        "id": "resonator_id_26",
-        "name": "Lumi",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/c/c9/Character_Lumi.png/256px-Character_Lumi.png",
-        "rarity": 4,
-        "element": "Electro",
-        "weapon": "Broadblade"
-      },
-        {
-        "id": "resonator_id_27",
-        "name": "Carlotta",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/e/e0/Character_Carlotta.png/256px-Character_Carlotta.png",
-        "rarity": 5,
-        "element": "Glacio",
-        "weapon": "Pistols"
-      },
-        {
-        "id": "resonator_id_28",
-        "name": "Roccia",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Roccia.png/256px-Character_Roccia.png",
-        "rarity": 5,
-        "element": "Havoc",
-        "weapon": "Gauntlets"
-      },
-      {
-        "id": "resonator_id_29",
-        "name": "Brant",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Brant.png/256px-Character_Brant.png",
-        "rarity": 5,
-        "element": "Fusion",
-        "weapon": "Sword"
-      },
-      {
-        "id": "resonator_id_30",
-        "name": "Cantarella",
-        "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Cantarella.png/256px-Character_Cantarella.png",
-        "rarity": 5,
-        "element": "Havoc",
-        "weapon": "Rectifier"
-      }
+      "element": "Glacio",
+      "weapon": "Gauntlets"
+  },
+  {
+      "id": "resonator_id_3",
+      "name": "Rover (Spectro)",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/7/7b/Character_Rover_Spectro.png/256px-Character_Rover_Spectro.png",
+      "rarity": 5,
+      "element": "Spectro",
+      "weapon": "Sword"
+  },
+  {
+      "id": "resonator_id_4",
+      "name": "Yangyang",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/8/87/Character_Yangyang.png/256px-Character_Yangyang.png",
+      "rarity": 4,
+      "element": "Aero",
+      "weapon": "Sword"
+  },
+  {
+      "id": "resonator_id_5",
+      "name": "Chixia",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/a/a9/Character_Chixia.png/256px-Character_Chixia.png",
+      "rarity": 4,
+      "element": "Fusion",
+      "weapon": "Pistols"
+  },
+  {
+      "id": "resonator_id_6",
+      "name": "Baizhi",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/5/53/Character_Baizhi.png/256px-Character_Baizhi.png",
+      "rarity": 4,
+      "element": "Glacio",
+      "weapon": "Rectifier"
+  },
+  {
+      "id": "resonator_id_7",
+      "name": "Sanhua",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/3/33/Character_Sanhua.png/256px-Character_Sanhua.png",
+      "rarity": 4,
+      "element": "Glacio",
+      "weapon": "Sword"
+  },
+  {
+      "id": "resonator_id_8",
+      "name": "Yuanwu",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Yuanwu.png/256px-Character_Yuanwu.png",
+      "rarity": 4,
+      "element": "Electro",
+      "weapon": "Gauntlets"
+  },
+  {
+      "id": "resonator_id_9",
+      "name": "Aalto",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/c/c9/Character_Aalto.png/256px-Character_Aalto.png",
+      "rarity": 4,
+      "element": "Aero",
+      "weapon": "Pistols"
+  },
+  {
+      "id": "resonator_id_10",
+      "name": "Danjin",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/e/e0/Character_Danjin.png/256px-Character_Danjin.png",
+      "rarity": 4,
+      "element": "Havoc",
+      "weapon": "Sword"
+  },
+  {
+      "id": "resonator_id_11",
+      "name": "Mortefi",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/a/a2/Character_Mortefi.png/256px-Character_Mortefi.png",
+      "rarity": 4,
+      "element": "Fusion",
+      "weapon": "Pistols"
+  },
+  {
+      "id": "resonator_id_12",
+      "name": "Taoqi",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/c/c2/Character_Taoqi.png/256px-Character_Taoqi.png",
+      "rarity": 4,
+      "element": "Havoc",
+      "weapon": "Broadblade"
+  },
+  {
+      "id": "resonator_id_13",
+      "name": "Calcharo",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/4/4b/Character_Calcharo.png/256px-Character_Calcharo.png",
+      "rarity": 5,
+      "element": "Electro",
+      "weapon": "Broadblade"
+  },
+  {
+      "id": "resonator_id_14",
+      "name": "Encore",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/9/95/Character_Encore.png/256px-Character_Encore.png",
+      "rarity": 5,
+      "element": "Fusion",
+      "weapon": "Rectifier"
+  },
+  {
+      "id": "resonator_id_15",
+      "name": "Jianxin",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/2/25/Character_Jianxin.png/256px-Character_Jianxin.png",
+      "rarity": 5,
+      "element": "Aero",
+      "weapon": "Gauntlets"
+  },
+  {
+      "id": "resonator_id_16",
+      "name": "Lingyang",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/9/91/Character_Lingyang.png/256px-Character_Lingyang.png",
+      "rarity": 5,
+      "element": "Glacio",
+      "weapon": "Gauntlets"
+  },
+  {
+      "id": "resonator_id_17",
+      "name": "Verina",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/a/a9/Character_Verina.png/256px-Character_Verina.png",
+      "rarity": 5,
+      "element": "Spectro",
+      "weapon": "Rectifier"
+  },
+  {
+      "id": "resonator_id_18",
+      "name": "Yinlin",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/5/52/Character_Yinlin.png/256px-Character_Yinlin.png",
+      "rarity": 5,
+      "element": "Electro",
+      "weapon": "Rectifier"
+  },
+  {
+      "id": "resonator_id_19",
+      "name": "Rover (Havoc)",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/8/87/Character_Rover_Havoc.png/256px-Character_Rover_Havoc.png",
+      "rarity": 5,
+      "element": "Havoc",
+      "weapon": "Sword"
+  },
+  {
+      "id": "resonator_id_20",
+      "name": "Jinhsi",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/a/a2/Character_Jinhsi.png/256px-Character_Jinhsi.png",
+      "rarity": 5,
+      "element": "Spectro",
+      "weapon": "Sword"
+  },
+  {
+      "id": "resonator_id_21",
+      "name": "Changli",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/c/c2/Character_Changli.png/256px-Character_Changli.png",
+      "rarity": 5,
+      "element": "Fusion",
+      "weapon": "Gauntlets"
+  },
+  {
+      "id": "resonator_id_22",
+      "name": "Zhezhi",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/e/e0/Character_Zhezhi.png/256px-Character_Zhezhi.png",
+      "rarity": 5,
+      "element": "Glacio",
+      "weapon": "Rectifier"
+  },
+  {
+      "id": "resonator_id_23",
+      "name": "Xiangli Yao",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Xiangli_Yao.png/256px-Character_Xiangli_Yao.png",
+      "rarity": 5,
+      "element": "Electro",
+      "weapon": "Pistols"
+  },
+  {
+      "id": "resonator_id_24",
+      "name": "The Shorekeeper",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/5/53/Character_The_Shorekeeper.png/256px-Character_The_Shorekeeper.png",
+      "rarity": 5,
+      "element": "Spectro",
+      "weapon": "Rectifier"
+  },
+  {
+      "id": "resonator_id_25",
+      "name": "Youhu",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/a/a9/Character_Youhu.png/256px-Character_Youhu.png",
+      "rarity": 4,
+      "element": "Glacio",
+      "weapon": "Gauntlets"
+  },
+  {
+      "id": "resonator_id_26",
+      "name": "Camellya",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/3/33/Character_Camellya.png/256px-Character_Camellya.png",
+      "rarity": 5,
+      "element": "Havoc",
+      "weapon": "Pistols"
+  },
+  {
+      "id": "resonator_id_27",
+      "name": "Lumi",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/c/c9/Character_Lumi.png/256px-Character_Lumi.png",
+      "rarity": 4,
+      "element": "Electro",
+      "weapon": "Broadblade"
+  },
+  {
+      "id": "resonator_id_28",
+      "name": "Carlotta",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/e/e0/Character_Carlotta.png/256px-Character_Carlotta.png",
+      "rarity": 5,
+      "element": "Glacio",
+      "weapon": "Pistols"
+  },
+  {
+      "id": "resonator_id_29",
+      "name": "Roccia",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Roccia.png/256px-Character_Roccia.png",
+      "rarity": 5,
+      "element": "Havoc",
+      "weapon": "Broadblade"
+  },
+  {
+      "id": "resonator_id_30",
+      "name": "Brant",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Brant.png/256px-Character_Brant.png",
+      "rarity": 5,
+      "element": "Fusion",
+      "weapon": "Sword"
+  },
+  {
+      "id": "resonator_id_31",
+      "name": "Cantarella",
+      "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Cantarella.png/256px-Character_Cantarella.png",
+      "rarity": 5,
+      "element": "Havoc",
+      "weapon": "Rectifier"
+  }
 ]

@@ -8,6 +8,7 @@ let readyCheckInterval;
 let clientSideTimerInterval = null; // Variable to hold the interval ID for client-side timers
 const READY_CHECK_INTERVAL = 3000; // Check ready status every 3 seconds
 const GAME_START_COUNTDOWN = 5; // 5 second countdown before game starts
+let isCurrentTurnTimedOut = false; // Flag to track local timeout state
 
 // Get references to all necessary HTML elements
 const createLobbyBtn = document.getElementById("createLobbyBtn");
@@ -815,10 +816,15 @@ function displayBans(bans) {
 function updateCharacterButtonStyles(picks, bans) {
     const buttons = document.querySelectorAll('.character-button');
     
-    // First, re-enable all buttons
-    buttons.forEach(button => {
-        button.disabled = false;
-    });
+    // Only re-enable buttons if the current turn hasn't locally timed out
+    if (!isCurrentTurnTimedOut) {
+        console.log("DEBUG: Re-enabling buttons in updateCharacterButtonStyles");
+        buttons.forEach(button => {
+            button.disabled = false;
+        });
+    } else {
+        console.log("DEBUG: Skipping button re-enable because isCurrentTurnTimedOut is true");
+    }
 
     buttons.forEach(button => {
         const resonatorId = button.dataset.resonatorId;
@@ -1043,6 +1049,10 @@ function updateTimerDisplay(endTime) {
         buttons.forEach(button => {
             button.disabled = true;
         });
+
+        // Set the timeout flag
+        isCurrentTurnTimedOut = true;
+        console.log("DEBUG: Setting isCurrentTurnTimedOut = true");
     } else {
         timerElement.textContent = `Time remaining: ${seconds}s`;
         if (seconds <= 10) {
@@ -1077,6 +1087,12 @@ function getFriendlyPhaseName(gameState) {
 }
 
 function updateGamePhaseUI(data) {
+    // Reset timeout flag if it was set and we're getting new state data
+    if (isCurrentTurnTimedOut) {
+        console.log("DEBUG: Resetting isCurrentTurnTimedOut = false due to new state data arrival.");
+        isCurrentTurnTimedOut = false;
+    }
+
     // Get references (ensure these are correct)
     const gameStatusHeader = document.getElementById('gameStatusHeader');
     const currentPhase = document.getElementById('currentPhase');

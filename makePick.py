@@ -21,7 +21,7 @@ def create_schedule(lobby_code, game_state, start_time_ms, duration_ms):
          return None
 
     expiration_time_seconds = (start_time_ms + duration_ms) / 1000
-    schedule_trigger_time_seconds = expiration_time_seconds + 2 # 2 sec buffer
+    schedule_trigger_time_seconds = expiration_time_seconds # 2 REMOVED + 2 buffer
 
     schedule_dt_utc = datetime.datetime.fromtimestamp(schedule_trigger_time_seconds, tz=datetime.timezone.utc)
     schedule_time_str = schedule_dt_utc.strftime('%Y-%m-%dT%H:%M:%S')

@@ -874,50 +874,66 @@ function displayBans(bans = []) {
     console.log("displayBans: Finished updating ban display");
 }
 
+
 // --- Function to display picks for a player ---
-function displayPicks(playerRole, playerName, picks = [], gameState) {
-    console.log(`displayPicks called for ${playerRole} (${playerName}), picks:`, picks, "gameState:", gameState);
+function displayPicks(playerIdentifier, playerName, allPicks = [], gameState) { // Renamed first arg for clarity
+    console.log(`displayPicks called for ${playerIdentifier} (${playerName}), allPicks:`, allPicks, "gameState:", gameState);
     
-    // Get the container for this player's picks
-    const container = document.getElementById(`${playerRole}Picks`);
+    const containerId = `${playerIdentifier}Picks`; // Use playerIdentifier consistently
+    const container = document.getElementById(containerId);
     if (!container) {
-        console.warn(`displayPicks: ${playerRole}Picks container not found`);
+        console.warn(`displayPicks: ${containerId} container not found`);
         return;
     }
 
     const picksContainer = container.querySelector('.picks-container');
     if (!picksContainer) {
-        console.warn(`displayPicks: picks-container not found within ${playerRole}Picks`);
+        console.warn(`displayPicks: picks-container not found within ${containerId}`);
         return;
     }
 
     const placeholders = picksContainer.querySelectorAll('.pick-placeholder');
-    console.log(`displayPicks: Found ${placeholders.length} pick placeholders for ${playerRole}`);
+    console.log(`displayPicks: Found ${placeholders.length} pick placeholders for ${playerIdentifier}`);
 
-    // Clear all pick placeholders first
+    // 1. Clear all placeholders for this player first
     placeholders.forEach((p, index) => {
-        console.log(`displayPicks: Clearing placeholder ${index} for ${playerRole}`);
-        p.innerHTML = '';
-        p.classList.remove('filled');
+        // console.log(`displayPicks: Clearing placeholder ${index} for ${playerIdentifier}`); // Optional log
+        p.innerHTML = ''; 
+        p.classList.remove('filled'); 
     });
 
-    // Calculate which picks belong to this player (even indices for player1, odd for player2)
-    const playerIndex = playerRole === 'player1' ? 0 : 1;
-    const playerPicks = picks.filter((_, index) => index % 2 === playerIndex);
-    console.log(`displayPicks: Filtered picks for ${playerRole}:`, playerPicks);
+    // 2. Determine which global pick indices belong to this player based on game state order
+    const playerPickIndicesInGlobalList = [];
+    if (playerIdentifier === 'player1') {
+        playerPickIndicesInGlobalList.push(0); // 1st pick (pick1_p1)
+        playerPickIndicesInGlobalList.push(2); // 3rd pick (pick1_p1_2)
+        playerPickIndicesInGlobalList.push(5); // 6th pick (pick2_p1)
+    } else if (playerIdentifier === 'player2') {
+        playerPickIndicesInGlobalList.push(1); // 2nd pick (pick1_p2)
+        playerPickIndicesInGlobalList.push(3); // 4th pick (pick1_p2_2)
+        playerPickIndicesInGlobalList.push(4); // 5th pick (pick2_p2)
+    }
+    console.log(`displayPicks: Global indices for ${playerIdentifier}:`, playerPickIndicesInGlobalList);
 
-    // Populate placeholders with pick images
-    playerPicks.forEach((pickId, index) => {
-        if (index < placeholders.length) {
-            // Find the resonator data using the pickId
+    // 3. Populate placeholders using the correct mapping
+    let playerPickCounter = 0; // This is the index for the player's specific placeholders (0, 1, 2)
+    playerPickIndicesInGlobalList.forEach(globalIndex => {
+        // Check if the pick actually exists in the main list
+        if (globalIndex < allPicks.length) { 
+            const pickId = allPicks[globalIndex]; // Get the correct pick ID using the global index
             const resonator = resonators.find(r => r.id === pickId);
-            const placeholder = placeholders[index];
-            console.log(`displayPicks: Processing pick ${index} for ${playerRole}, resonatorId: ${pickId}, found resonator:`, resonator ? 'yes' : 'no');
+            
+            // Find the correct placeholder using the local player pick counter
+            const placeholder = picksContainer.querySelector(`.pick-placeholder[data-pick-index="${playerPickCounter}"]`); 
+            
+            // Log the mapping
+            console.log(`Mapping globalIndex ${globalIndex} (pickId: ${pickId}) to ${playerIdentifier}'s placeholder ${playerPickCounter}`); 
+            console.log(` Found Resonator:`, resonator); 
 
-            if (resonator && placeholder && resonator.image_button) {
-                console.log(`displayPicks: Adding image for ${resonator.name} to placeholder ${index} for ${playerRole}`);
+            if (resonator && placeholder && resonator.image_pick) { // Check for image_pick
+                console.log(` Adding image for ${resonator.name} to placeholder ${playerPickCounter} for ${playerIdentifier}`);
                 const img = document.createElement('img');
-                img.src = resonator.image_pick;
+                img.src = resonator.image_pick; // Use image_pick
                 img.alt = resonator.name;
                 img.title = `${playerName}'s Pick: ${resonator.name}`;
 
@@ -926,18 +942,17 @@ function displayPicks(playerRole, playerName, picks = [], gameState) {
                 img.style.objectFit = 'cover';
                 img.style.borderRadius = 'inherit';
 
-                placeholder.innerHTML = '';
+                placeholder.innerHTML = ''; 
                 placeholder.appendChild(img);
                 placeholder.classList.add('filled');
             } else if (placeholder) {
-                console.warn(`displayPicks: Missing data for pick ${index}, resonatorId: ${pickId} for ${playerRole}`);
-                placeholder.innerHTML = '?';
+                 console.warn(` Missing data or placeholder for pick at globalIndex ${globalIndex}, local index ${playerPickCounter}, resonatorId: ${pickId} for ${playerIdentifier}`);
+                 placeholder.innerHTML = '?';
             }
-        } else {
-            console.warn(`displayPicks: More picks than placeholders for ${playerRole}. Extra pick: ${pickId} at index ${index}`);
+            playerPickCounter++; // Increment the LOCAL placeholder index
         }
     });
-    console.log(`displayPicks: Finished updating pick display for ${playerRole}`);
+    console.log(`displayPicks: Finished updating pick display for ${playerIdentifier}`);
 }
 
 // --- Function to update character button styles ---

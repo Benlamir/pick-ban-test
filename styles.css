@@ -389,22 +389,24 @@ button {
     box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
 }
 
-.character-button.banned {
-    border-color: #f44336;
-    border-width: 4px;
-    box-shadow: 0 0 20px rgba(244, 67, 54, 0.3);
-    opacity: 0.7;
+/* Style for BANNED AND PICKED buttons */
+.character-button.banned, 
+.character-button.picked-p1, 
+.character-button.picked-p2 {
+    opacity: 0.7; /* Apply base opacity */
+    border: 2px solid rgba(245, 60, 60, 0.798); /* <<< ADD THIS LINE */ 
+    /* Border/shadow removed, will use default .character-button border */
 }
 
-.character-button.banned::after {
+/* Keep this rule as is */
+.character-button.banned::after,
+.character-button.picked-p1::after, 
+.character-button.picked-p2::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    z-index: 1; 
 }
 
 /* Responsive adjustments */
@@ -514,8 +516,8 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
     border-radius: 8px;
     margin-bottom: 1rem;
     font-size: 0.9em;
@@ -527,6 +529,36 @@ button {
     gap: 0.5rem;
     color: #ffffff;
 }
+
+/* --- Lobby Info Enhancements --- */
+
+/* Styling for the instruction text */
+.share-instruction {
+    font-size: 0.85em;  /* Smaller font size */
+    color: #bdbdbd;    /* Lighter grey color */
+    margin-left: 1em; /* Space between copy button and text */
+    align-self: center; /* Try to vertically align with button/code */
+    /* Starts hidden via 'hidden' class in HTML */
+  }
+  
+  /* Keyframes for the glow animation */
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.2); /* Subtle white glow */
+    }
+    50% {
+      box-shadow: 0 0 15px 5px rgba(74, 144, 226, 0.4); /* Brighter blue glow */
+    }
+  }
+  
+  /* Class to apply the glow animation to the lobby info container */
+  .lobby-info.highlight-code {
+    animation: glow 2s ease-out; /* Apply 'glow' animation for 2 seconds */
+    /* Ensure the base .lobby-info has position: relative if needed for shadows */
+    position: relative; 
+  }
+  
+  /* --- End Lobby Info Enhancements --- */
 
 #gameStateDisplay {
     font-size: 0.9em;
@@ -980,4 +1012,21 @@ button {
     .player-section {
         padding: 0.8rem;
     }
+}
+
+/* Add highlight animation */
+@keyframes highlight {
+    0% {
+        background: rgba(255, 255, 255, 0.05);
+    }
+    50% {
+        background: rgba(74, 144, 226, 0.2);
+    }
+    100% {
+        background: rgba(255, 255, 255, 0.05);
+    }
+}
+
+.lobby-info.highlight {
+    animation: highlight 2s ease-in-out;
 }

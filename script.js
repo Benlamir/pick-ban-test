@@ -254,6 +254,15 @@ createLobbyBtn.addEventListener("click", async () => {
             stopPolling();
             startPolling();
             updateLobbyData();
+
+            // Add highlight effect to lobby info
+            const lobbyInfo = document.querySelector('.lobby-info');
+            if (lobbyInfo) {
+                lobbyInfo.classList.add('highlight');
+                setTimeout(() => {
+                    lobbyInfo.classList.remove('highlight');
+                }, 2000); // Remove highlight after 2 seconds
+            }
         } else {
             alert(`Error creating lobby: ${responseData.error || response.statusText}`);
         }
@@ -1209,6 +1218,7 @@ function updateGamePhaseUI(data) {
     const globalBansSection = document.getElementById('globalBansSection'); // Separate from pickBanSection
     const vsImageContainer = document.getElementById('vsImageContainer'); // Inside pickBanSection
     const readyCheckContainer = document.getElementById('readyCheckContainer');
+    const shareInstructionElement = document.getElementById('shareInstruction'); // Added for instruction text
 
     if (!gameStatusHeader || !currentPhase || !turnIndicator || !pickBanSection || !timer || !filterContainer || !characterContainer || !globalBansSection || !vsImageContainer || !readyCheckContainer) {
         console.error("One or more critical UI elements missing in updateGamePhaseUI");
@@ -1234,6 +1244,7 @@ function updateGamePhaseUI(data) {
     const isReadyCheck = (data.gameState === 'ready_check');
     const isWaiting = (data.gameState === 'waiting');
     const isActivePickBan = !isComplete && !isReadyCheck && !isWaiting;
+    const showInstruction = (isWaiting && data.player2 === ''); // Show only if waiting AND P2 slot empty
 
     let statusMessage = '';
     let activePlayer = null;
@@ -1244,6 +1255,7 @@ function updateGamePhaseUI(data) {
     setElementVisibility(pickBanSection, isActivePickBan || isComplete); // Show this section if active or complete
     setElementVisibility(readyCheckContainer, isReadyCheck);
     setElementVisibility(globalBansSection, isActivePickBan); // Hide bans when complete or waiting/ready
+    setElementVisibility(shareInstructionElement, showInstruction); // Control instruction text visibility
 
     // Elements INSIDE pickBanSection:
     setElementVisibility(timer, isActivePickBan);

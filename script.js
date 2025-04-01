@@ -1142,6 +1142,9 @@ function updateTimerDisplay(endTime) {
         // --- Optimistic UI ---
         // Find the currently active placeholder and mark it as pending
         const activePlaceholder = document.querySelector('.pick-placeholder.active, .ban-placeholder.active');
+
+        console.log("Timer expired. Found active placeholder:", activePlaceholder);
+        
         if (activePlaceholder && !activePlaceholder.classList.contains('filled')) {
             activePlaceholder.innerHTML = '⏳'; // Show hourglass or similar indicator
             activePlaceholder.classList.remove('active'); // Remove active highlight

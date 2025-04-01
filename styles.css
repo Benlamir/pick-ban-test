@@ -340,7 +340,7 @@ button {
     box-sizing: border-box; /* Include padding/border in the element's total width */
     max-height: 400px;   /* Set a max height */
     overflow-y: auto;    /* Add vertical scrollbar if content exceeds max-height */
-    padding-right: 0.5rem; /* Add space for scrollbar */
+    /*padding-right: 0.5rem; /* Add space for scrollbar */
 }
 
 .character-button {
@@ -539,7 +539,7 @@ button {
 
 .game-content {
     display: grid;
-    grid-template-columns: 1000px 1fr 1000px;    /* Increased from 250px */
+    grid-template-columns: 800px 1fr 800px;    /* Increased from 250px */
     gap: 2rem;
     align-items: start;
     width: 100%;

@@ -903,8 +903,8 @@ button {
 
 /* Specific size for Ban Placeholders */
 .ban-placeholder {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
 }
 
 /* Neutral pulse animation for active placeholders */
@@ -938,7 +938,7 @@ button {
   padding: 0.5rem;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  min-height: 152px; /* Increased to match new placeholder height */
+  min-height: 282px; /* Increased to match new placeholder height */
   align-items: center;
 }
 
@@ -950,7 +950,7 @@ button {
   padding: 0.5rem;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  min-height: 52px;
+  min-height: 82px;
   align-items: center;
 }
 

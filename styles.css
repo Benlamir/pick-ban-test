@@ -417,17 +417,6 @@ button {
     }
 }
 
-@media (max-width: 768px) {
-    #characterContainer {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 0.8rem;
-        padding: 1rem;
-    }
-    .character-button {
-        min-height: 80px;
-    }
-}
-
 .ready-check-container {
     text-align: center;
     padding: 20px;
@@ -908,8 +897,8 @@ button {
 
 /* Specific size for Player Pick Placeholders */
 .pick-placeholder {
-  width: 225px;  /* Increased from 80px */
-  height: 450px; /* Increased from 120px */
+  width: 200px;  /* Increased from 80px */
+  height: 400px; /* Increased from 120px */
 }
 
 /* Specific size for Ban Placeholders */
@@ -965,4 +954,30 @@ button {
   align-items: center;
 }
 
-/* --- End Placeholder Styles --- */
+@media (max-width: 768px) {
+    #characterContainer {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 0.8rem;
+        padding: 1rem;
+    }
+    .character-button {
+        min-height: 80px;
+    }
+
+    .pick-placeholder {
+       flex: 0 0 65px !important; /* Added !important for test */
+       /* width: 65px; */ /* Commented out since using flex */
+       height: 85px;
+    }
+
+    .picks-container {
+        min-height: 87px;
+        gap: 0.3rem;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .player-section {
+        padding: 0.8rem;
+    }
+}

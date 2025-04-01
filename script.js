@@ -258,9 +258,9 @@ createLobbyBtn.addEventListener("click", async () => {
             // Add highlight effect to lobby info
             const lobbyInfo = document.querySelector('.lobby-info');
             if (lobbyInfo) {
-                lobbyInfo.classList.add('highlight');
+                lobbyInfo.classList.add('highlight-code');
                 setTimeout(() => {
-                    lobbyInfo.classList.remove('highlight');
+                    lobbyInfo.classList.remove('highlight-code');
                 }, 2000); // Remove highlight after 2 seconds
             }
         } else {

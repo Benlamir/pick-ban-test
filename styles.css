@@ -543,11 +543,13 @@ button {
   
   /* Keyframes for the glow animation */
   @keyframes glow {
-    0%, 100% {
-      box-shadow: 0 0 5px rgba(255, 255, 255, 0.2); /* Subtle white glow */
+    0%, 50%, 100% {
+      /* Start, middle, and end state: subtle or no glow */
+      box-shadow: 0 0 5px rgba(76, 175, 80, 0.2); /* Subtle green base */
     }
-    50% {
-      box-shadow: 0 0 15px 5px rgba(74, 144, 226, 0.4); /* Brighter blue glow */
+    25%, 75% {
+      /* Peaks of the two pulses: brighter green glow */
+      box-shadow: 0 0 18px 6px rgba(76, 175, 80, 0.6); /* Brighter green glow */
     }
   }
   

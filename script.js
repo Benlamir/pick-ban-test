@@ -224,6 +224,7 @@ lobbyCodeInput.addEventListener("input", () => {
 createLobbyBtn.addEventListener("click", async () => {
     const playerName = playerNameInput.value.trim();
     if (!playerName) {
+        showError(playerNameInput, nameError);
         alert("Please enter your name first!");
         return;
     }else {

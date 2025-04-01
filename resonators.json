@@ -21,7 +21,7 @@
       "id": "resonator_id_3",
       "name": "Rover (Spectro)",
       "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_rover_spectro.webp",
-      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/roccia.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/rover-aero.webp",
       "rarity": 5,
       "element": "Spectro",
       "weapon": "Sword"
@@ -30,7 +30,7 @@
         "id": "resonator_id_4",
         "name": "Rover (Havoc)",
         "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_rover_havoc.webp",
-        "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/roccia.webp",
+        "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/rover-aero.webp",
         "rarity": 5,
         "element": "Havoc",
         "weapon": "Sword"

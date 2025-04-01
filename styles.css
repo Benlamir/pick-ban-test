@@ -898,7 +898,7 @@ button {
 /* Specific size for Player Pick Placeholders */
 .pick-placeholder {
   width: 200px;  /* Increased from 80px */
-  height: 400px; /* Increased from 120px */
+  height: 280px; /* Increased from 120px */
 }
 
 /* Specific size for Ban Placeholders */

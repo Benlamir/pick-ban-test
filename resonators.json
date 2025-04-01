@@ -1,250 +1,290 @@
 [
-  {
+    {
       "id": "resonator_id_1",
       "name": "Jiyan",
-      "image": "https://pick-ban-test-2023-10-27.s3-website-us-east-1.amazonaws.com/images/jiyan.png",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_jiyan.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/jiyan.webp",
       "rarity": 5,
       "element": "Aero",
       "weapon": "Broadblade"
-  },
-  {
+    },
+    {
       "id": "resonator_id_2",
       "name": "Lingyang",
-      "image": "https://pick-ban-test-2023-10-27.s3-website-us-east-1.amazonaws.com/images/lingyang.png",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_ling.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/lingyang.webp",
       "rarity": 5,
       "element": "Glacio",
       "weapon": "Gauntlets"
-  },
-  {
+    },
+    {
       "id": "resonator_id_3",
       "name": "Rover (Spectro)",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/7/7b/Character_Rover_Spectro.png/256px-Character_Rover_Spectro.png",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_rover_spectro.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/roccia.webp",
       "rarity": 5,
       "element": "Spectro",
       "weapon": "Sword"
-  },
-  {
-      "id": "resonator_id_4",
-      "name": "Yangyang",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/8/87/Character_Yangyang.png/256px-Character_Yangyang.png",
-      "rarity": 4,
-      "element": "Aero",
-      "weapon": "Sword"
-  },
-  {
-      "id": "resonator_id_5",
-      "name": "Chixia",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/a/a9/Character_Chixia.png/256px-Character_Chixia.png",
-      "rarity": 4,
-      "element": "Fusion",
-      "weapon": "Pistols"
-  },
-  {
+    },
+    {
+        "id": "resonator_id_4",
+        "name": "Rover (Havoc)",
+        "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_rover_havoc.webp",
+        "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/roccia.webp",
+        "rarity": 5,
+        "element": "Havoc",
+        "weapon": "Sword"
+    },
+    {
+        "id": "resonator_id_5",
+        "name": "Rover (Aero)",
+        "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_rover_aero.webp",
+        "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/rover-aero.webp",
+        "rarity": 5,
+        "element": "Aero",
+        "weapon": "Sword"
+    },
+    {
       "id": "resonator_id_6",
-      "name": "Baizhi",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/5/53/Character_Baizhi.png/256px-Character_Baizhi.png",
+      "name": "Yangyang",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_yang.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/yangyang.webp",
       "rarity": 4,
-      "element": "Glacio",
-      "weapon": "Rectifier"
-  },
-  {
+      "element": "Aero",
+      "weapon": "Sword"
+    },
+    {
       "id": "resonator_id_7",
-      "name": "Sanhua",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/3/33/Character_Sanhua.png/256px-Character_Sanhua.png",
-      "rarity": 4,
-      "element": "Glacio",
-      "weapon": "Sword"
-  },
-  {
-      "id": "resonator_id_8",
-      "name": "Yuanwu",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Yuanwu.png/256px-Character_Yuanwu.png",
-      "rarity": 4,
-      "element": "Electro",
-      "weapon": "Gauntlets"
-  },
-  {
-      "id": "resonator_id_9",
-      "name": "Aalto",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/c/c9/Character_Aalto.png/256px-Character_Aalto.png",
-      "rarity": 4,
-      "element": "Aero",
-      "weapon": "Pistols"
-  },
-  {
-      "id": "resonator_id_10",
-      "name": "Danjin",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/e/e0/Character_Danjin.png/256px-Character_Danjin.png",
-      "rarity": 4,
-      "element": "Havoc",
-      "weapon": "Sword"
-  },
-  {
-      "id": "resonator_id_11",
-      "name": "Mortefi",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/a/a2/Character_Mortefi.png/256px-Character_Mortefi.png",
+      "name": "Chixia",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_chixia.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/chixia.webp",
       "rarity": 4,
       "element": "Fusion",
       "weapon": "Pistols"
-  },
-  {
+    },
+    {
+      "id": "resonator_id_8",
+      "name": "Baizhi",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_baizhi.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/baizhi.webp",
+      "rarity": 4,
+      "element": "Glacio",
+      "weapon": "Rectifier"
+    },
+    {
+      "id": "resonator_id_9",
+      "name": "Sanhua",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_senhua.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/sanhua.webp",
+      "rarity": 4,
+      "element": "Glacio",
+      "weapon": "Sword"
+    },
+    {
+      "id": "resonator_id_10",
+      "name": "Yuanwu",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_yuanwu.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/yuanwu.webp",
+      "rarity": 4,
+      "element": "Electro",
+      "weapon": "Gauntlets"
+    },
+    {
+      "id": "resonator_id_11",
+      "name": "Aalto",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_aalto.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/aalto.webp",
+      "rarity": 4,
+      "element": "Aero",
+      "weapon": "Pistols"
+    },
+    {
       "id": "resonator_id_12",
+      "name": "Danjin",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_danjin.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/danjin.webp",
+      "rarity": 4,
+      "element": "Havoc",
+      "weapon": "Sword"
+    },
+    {
+      "id": "resonator_id_13",
+      "name": "Mortefi",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_mortefi.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/mortefi.webp",
+      "rarity": 4,
+      "element": "Fusion",
+      "weapon": "Pistols"
+    },
+    {
+      "id": "resonator_id_14",
       "name": "Taoqi",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/c/c2/Character_Taoqi.png/256px-Character_Taoqi.png",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_taoqi.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/taoqi.webp",
       "rarity": 4,
       "element": "Havoc",
       "weapon": "Broadblade"
-  },
-  {
-      "id": "resonator_id_13",
+    },
+    {
+      "id": "resonator_id_15",
       "name": "Calcharo",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/4/4b/Character_Calcharo.png/256px-Character_Calcharo.png",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_calch.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/calcharo.webp",
       "rarity": 5,
       "element": "Electro",
       "weapon": "Broadblade"
-  },
-  {
-      "id": "resonator_id_14",
+    },
+    {
+      "id": "resonator_id_16",
       "name": "Encore",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/9/95/Character_Encore.png/256px-Character_Encore.png",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_encore.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/encore.webp",
       "rarity": 5,
       "element": "Fusion",
       "weapon": "Rectifier"
-  },
-  {
-      "id": "resonator_id_15",
+    },
+    {
+      "id": "resonator_id_17",
       "name": "Jianxin",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/2/25/Character_Jianxin.png/256px-Character_Jianxin.png",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_jiaxin.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/jianxin.webp",
       "rarity": 5,
       "element": "Aero",
       "weapon": "Gauntlets"
-  },
-  {
-      "id": "resonator_id_16",
-      "name": "Lingyang",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/9/91/Character_Lingyang.png/256px-Character_Lingyang.png",
-      "rarity": 5,
-      "element": "Glacio",
-      "weapon": "Gauntlets"
-  },
-  {
-      "id": "resonator_id_17",
+    },
+    {
+      "id": "resonator_id_18",
       "name": "Verina",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/a/a9/Character_Verina.png/256px-Character_Verina.png",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_verina.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/verina.webp",
       "rarity": 5,
       "element": "Spectro",
       "weapon": "Rectifier"
-  },
-  {
-      "id": "resonator_id_18",
+    },
+    {
+      "id": "resonator_id_19",
       "name": "Yinlin",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/5/52/Character_Yinlin.png/256px-Character_Yinlin.png",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_yinglin.webp",
+      "image_pick": "Yhttps://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/yinlin.webp",
       "rarity": 5,
       "element": "Electro",
       "weapon": "Rectifier"
-  },
-  {
-      "id": "resonator_id_19",
-      "name": "Rover (Havoc)",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/8/87/Character_Rover_Havoc.png/256px-Character_Rover_Havoc.png",
-      "rarity": 5,
-      "element": "Havoc",
-      "weapon": "Sword"
-  },
-  {
+    },
+    {
       "id": "resonator_id_20",
       "name": "Jinhsi",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/a/a2/Character_Jinhsi.png/256px-Character_Jinhsi.png",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_jihni.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/jinhsi.webp",
       "rarity": 5,
       "element": "Spectro",
-      "weapon": "Sword"
-  },
-  {
+      "weapon": "Broadblade"
+    },
+    {
       "id": "resonator_id_21",
       "name": "Changli",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/c/c2/Character_Changli.png/256px-Character_Changli.png",
-      "rarity": 5,
-      "element": "Fusion",
-      "weapon": "Gauntlets"
-  },
-  {
-      "id": "resonator_id_22",
-      "name": "Zhezhi",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/e/e0/Character_Zhezhi.png/256px-Character_Zhezhi.png",
-      "rarity": 5,
-      "element": "Glacio",
-      "weapon": "Rectifier"
-  },
-  {
-      "id": "resonator_id_23",
-      "name": "Xiangli Yao",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Xiangli_Yao.png/256px-Character_Xiangli_Yao.png",
-      "rarity": 5,
-      "element": "Electro",
-      "weapon": "Pistols"
-  },
-  {
-      "id": "resonator_id_24",
-      "name": "The Shorekeeper",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/5/53/Character_The_Shorekeeper.png/256px-Character_The_Shorekeeper.png",
-      "rarity": 5,
-      "element": "Spectro",
-      "weapon": "Rectifier"
-  },
-  {
-      "id": "resonator_id_25",
-      "name": "Youhu",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/a/a9/Character_Youhu.png/256px-Character_Youhu.png",
-      "rarity": 4,
-      "element": "Glacio",
-      "weapon": "Gauntlets"
-  },
-  {
-      "id": "resonator_id_26",
-      "name": "Camellya",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/3/33/Character_Camellya.png/256px-Character_Camellya.png",
-      "rarity": 5,
-      "element": "Havoc",
-      "weapon": "Pistols"
-  },
-  {
-      "id": "resonator_id_27",
-      "name": "Lumi",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/c/c9/Character_Lumi.png/256px-Character_Lumi.png",
-      "rarity": 4,
-      "element": "Electro",
-      "weapon": "Broadblade"
-  },
-  {
-      "id": "resonator_id_28",
-      "name": "Carlotta",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/e/e0/Character_Carlotta.png/256px-Character_Carlotta.png",
-      "rarity": 5,
-      "element": "Glacio",
-      "weapon": "Pistols"
-  },
-  {
-      "id": "resonator_id_29",
-      "name": "Roccia",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Roccia.png/256px-Character_Roccia.png",
-      "rarity": 5,
-      "element": "Havoc",
-      "weapon": "Broadblade"
-  },
-  {
-      "id": "resonator_id_30",
-      "name": "Brant",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Brant.png/256px-Character_Brant.png",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_changli.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/changli.webp",
       "rarity": 5,
       "element": "Fusion",
       "weapon": "Sword"
-  },
-  {
+    },
+    {
+      "id": "resonator_id_22",
+      "name": "Zhezhi",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_zhe.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/zhezhi.webp",
+      "rarity": 5,
+      "element": "Glacio",
+      "weapon": "Rectifier"
+    },
+    {
+      "id": "resonator_id_23",
+      "name": "Xiangli Yao",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_xiang.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/xiangli-yao.webp",
+      "rarity": 5,
+      "element": "Electro",
+      "weapon": "Gauntlets"
+    },
+    {
+      "id": "resonator_id_24",
+      "name": "The Shorekeeper",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_keeper.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/shorekeeper.webp",
+      "rarity": 5,
+      "element": "Spectro",
+      "weapon": "Rectifier"
+    },
+    {
+      "id": "resonator_id_25",
+      "name": "Youhu",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_youhu.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/youhu.webp",
+      "rarity": 4,
+      "element": "Glacio",
+      "weapon": "Gauntlets"
+    },
+    {
+      "id": "resonator_id_26",
+      "name": "Camellya",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_cam.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/camellya.webp",
+      "rarity": 5,
+      "element": "Havoc",
+      "weapon": "Sword"
+    },
+    {
+      "id": "resonator_id_27",
+      "name": "Lumi",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_lumi.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/lumi.webp",
+      "rarity": 4,
+      "element": "Electro",
+      "weapon": "Broadblade"
+    },
+    {
+      "id": "resonator_id_28",
+      "name": "Carlotta",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_carlotta.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/carlotta.webp",
+      "rarity": 5,
+      "element": "Glacio",
+      "weapon": "Pistols"
+    },
+    {
+      "id": "resonator_id_29",
+      "name": "Roccia",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_roccia.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/roccia.webp",
+      "rarity": 5,
+      "element": "Havoc",
+      "weapon": "Broadblade"
+    },
+    {
+      "id": "resonator_id_30",
+      "name": "Brant",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_brant.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/brant.webp",
+      "rarity": 5,
+      "element": "Fusion",
+      "weapon": "Sword"
+    },
+    {
       "id": "resonator_id_31",
       "name": "Cantarella",
-      "image": "https://wiki.wutheringwaves.com/images/thumb/d/d7/Character_Cantarella.png/256px-Character_Cantarella.png",
+      "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_canta.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/cantarella.webp",
       "rarity": 5,
       "element": "Havoc",
       "weapon": "Rectifier"
-  }
-]
+    },
+    {
+        "id": "resonator_id_32",
+        "name": "Phoebe",
+        "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_phoebe.webp",
+        "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/phoebe.webp",
+        "rarity": 5,
+        "element": "Spectro",
+        "weapon": "Rectifier"
+    }
+  ]

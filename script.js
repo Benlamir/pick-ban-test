@@ -1027,12 +1027,27 @@ async function initializePage() {
         // Check for existing lobby code in localStorage
         const savedLobbyCode = localStorage.getItem("lobbyCode");
         if (savedLobbyCode) {
-            // If there's a saved lobby code, try to join that lobby
-            const playerName = localStorage.getItem("playerName");
-            if (playerName) {
-                playerNameInput.value = playerName;
+            // If there's saved lobby info, restore the UI state
+            const savedPlayerName = localStorage.getItem("playerName");
+            const savedRole = localStorage.getItem("role"); // Get role too
+
+            if (savedPlayerName && savedRole) {
+                console.log("Found saved lobby state, restoring UI:", savedLobbyCode, savedRole, savedPlayerName);
+                // Populate inputs (optional, good for display)
+                playerNameInput.value = savedPlayerName;
                 lobbyCodeInput.value = savedLobbyCode;
-                await joinLobby(savedLobbyCode, playerName);
+
+                // Show the lobby view immediately
+                showLobbyView(true);
+                updateButtonVisibility(); // Update buttons based on saved role
+
+                // Start polling to get the latest data for the restored lobby
+                startPolling();
+
+            } else {
+                // If lobby code exists but name/role doesn't, clear inconsistent state
+                console.warn("Inconsistent saved state found (code without name/role). Clearing.");
+                clearLocalLobbyState();
             }
         }
 

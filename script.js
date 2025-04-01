@@ -225,7 +225,6 @@ createLobbyBtn.addEventListener("click", async () => {
     const playerName = playerNameInput.value.trim();
     if (!playerName) {
         showError(playerNameInput, nameError);
-        alert("Please enter your name first!");
         return;
     }else {
         clearErrors(); // Clear name error if previously shown
@@ -283,19 +282,16 @@ joinLobbyBtn.addEventListener("click", async () => {
     if (!lobbyCode && !playerName) {
         showError(lobbyCodeInput, codeError);
         showError(playerNameInput, nameError);
-        alert("Please enter both lobby code and your name!");
         return;
     }
     
     if (!lobbyCode) {
         showError(lobbyCodeInput, codeError);
-        alert("Please enter a lobby code!");
         return;
     }
 
     if (!playerName) {
         showError(playerNameInput, nameError);
-        alert("Please enter your name!");
         return;
     }
 

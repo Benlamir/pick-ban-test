@@ -165,7 +165,7 @@
       "id": "resonator_id_19",
       "name": "Yinlin",
       "image_button": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/resonators-buttons/button_yinglin.webp",
-      "image_pick": "Yhttps://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/yinlin.webp",
+      "image_pick": "https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/portraits/yinlin.webp",
       "rarity": 5,
       "element": "Electro",
       "weapon": "Rectifier"

@@ -813,116 +813,113 @@ async function copyLobbyCode(code) {
     }
 }
 
-// --- Function to display picks for a player ---
-function displayPicks(playerIdentifier, playerName, allPicks = [], gameState) {
-    const containerId = `${playerIdentifier}Picks`;
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    const picksContainer = container.querySelector('.picks-container');
-    if (!picksContainer) return;
-
-    const placeholders = picksContainer.querySelectorAll('.pick-placeholder');
-
-    // 1. Clear all placeholders for this player first
-    placeholders.forEach(p => {
-        p.innerHTML = ''; // Remove any existing image or content
-        p.classList.remove('filled'); // Remove filled class if you add one later
-    });
-
-    // 2. Determine which picks belong to this player based on game state order
-    // Note: This mapping depends on the EXACT state transition logic in makePick.py
-    const playerPickIndicesInGlobalList = [];
-    if (playerIdentifier === 'player1') {
-        playerPickIndicesInGlobalList.push(0); // Corresponds to pick1_p1
-        playerPickIndicesInGlobalList.push(2); // Corresponds to pick1_p1_2
-        playerPickIndicesInGlobalList.push(5); // Corresponds to pick2_p1
-    } else if (playerIdentifier === 'player2') {
-        playerPickIndicesInGlobalList.push(1); // Corresponds to pick1_p2
-        playerPickIndicesInGlobalList.push(3); // Corresponds to pick1_p2_2
-        playerPickIndicesInGlobalList.push(4); // Corresponds to pick2_p2
-    }
-
-    let playerPickCounter = 0;
-    // 3. Populate placeholders with picks
-    playerPickIndicesInGlobalList.forEach(globalIndex => {
-        if (globalIndex < allPicks.length) {
-            const pickId = allPicks[globalIndex];
-            const resonator = resonators.find(r => r.id === pickId);
-            const placeholder = placeholders[playerPickCounter];
-
-            if (resonator && placeholder && resonator.image_pick) { // Changed from resonator.image to resonator.image_pick
-                const img = document.createElement('img');
-                img.src = resonator.image_pick; // Changed from resonator.image to resonator.image_pick
-                img.alt = resonator.name;
-                img.title = `Picked: ${resonator.name}`;
-
-                img.style.width = '100%';
-                img.style.height = '100%';
-                img.style.objectFit = 'cover';
-                img.style.borderRadius = 'inherit';
-
-                placeholder.innerHTML = '';
-                placeholder.appendChild(img);
-                placeholder.classList.add('filled');
-                playerPickCounter++;
-            } else if (placeholder) {
-                placeholder.innerHTML = '?';
-                console.warn(`Resonator data or image_pick not found for pickId: ${pickId}`);
-            }
-        }
-    });
-
-    // Update player name display (remains the same)
-    const nameElement = container.querySelector('.player-name');
-    if (nameElement) {
-        nameElement.textContent = playerName || playerIdentifier; // Keep original logic
-    }
-}
-
 // --- Function to display banned resonators ---
-function displayBans(playerIdentifier, playerName, allBans = [], gameState) {
-    const containerId = `${playerIdentifier}Bans`;
-    const container = document.getElementById(containerId);
-    if (!container) return;
+function displayBans(bans = []) {
+    console.log("displayBans called with bans:", bans);
+    const container = document.getElementById('globalBansSection');
+    if (!container) {
+        console.warn("displayBans: globalBansSection container not found");
+        return;
+    }
 
     const bansContainer = container.querySelector('.bans-container');
-    if (!bansContainer) return;
-
-    const placeholders = bansContainer.querySelectorAll('.ban-placeholder');
-
-    // 1. Clear all placeholders for this player first
-    placeholders.forEach(p => {
-        p.innerHTML = ''; // Remove any existing image or content
-        p.classList.remove('filled'); // Remove filled class if you add one later
-    });
-
-    // 2. Determine which bans belong to this player based on game state order
-    // Note: This mapping depends on the EXACT state transition logic in makeBan.py
-    const playerBanIndicesInGlobalList = [];
-    if (playerIdentifier === 'player1') {
-        playerBanIndicesInGlobalList.push(0); // Corresponds to ban1_p1
-        playerBanIndicesInGlobalList.push(2); // Corresponds to ban1_p1_2
-        playerBanIndicesInGlobalList.push(5); // Corresponds to ban2_p1
-    } else if (playerIdentifier === 'player2') {
-        playerBanIndicesInGlobalList.push(1); // Corresponds to ban1_p2
-        playerBanIndicesInGlobalList.push(3); // Corresponds to ban1_p2_2
-        playerBanIndicesInGlobalList.push(4); // Corresponds to ban2_p2
+    if (!bansContainer) {
+        console.warn("displayBans: bans-container not found within globalBansSection");
+        return;
     }
 
-    let playerBanCounter = 0;
-    // 3. Populate placeholders with bans
-    playerBanIndicesInGlobalList.forEach(globalIndex => {
-        if (globalIndex < allBans.length) {
-            const banId = allBans[globalIndex];
-            const resonator = resonators.find(r => r.id === banId);
-            const placeholder = placeholders[playerBanCounter];
+    const placeholders = bansContainer.querySelectorAll('.ban-placeholder');
+    console.log("displayBans: Found", placeholders.length, "ban placeholders");
 
-            if (resonator && placeholder && resonator.image_button) { // Changed from resonator.image to resonator.image_button
+    // 1. Clear all ban placeholders first
+    placeholders.forEach((p, index) => {
+        console.log(`displayBans: Clearing placeholder ${index}`);
+        p.innerHTML = '';
+        p.classList.remove('filled');
+    });
+
+    // 2. Populate placeholders with ban images (using image_button)
+    bans.forEach((banId, index) => {
+        if (index < placeholders.length) { 
+            // Find the resonator data using the banId
+            const resonator = resonators.find(r => r.id === banId); 
+            const placeholder = placeholders[index]; 
+            console.log(`displayBans: Processing ban ${index}, resonatorId: ${banId}, found resonator:`, resonator ? 'yes' : 'no');
+
+            // Use the 'image_button' for the ban display
+            if (resonator && placeholder && resonator.image_button) { // Check if resonator and image_button URL exist
+                console.log(`displayBans: Adding image for ${resonator.name} to placeholder ${index}`);
                 const img = document.createElement('img');
-                img.src = resonator.image_button; // Changed from resonator.image to resonator.image_button
+                img.src = resonator.image_button; // <<< USE image_button
                 img.alt = resonator.name;
-                img.title = `Banned: ${resonator.name}`;
+                img.title = `Banned: ${resonator.name}`; // Update title
+
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover'; 
+                img.style.borderRadius = 'inherit';
+
+                placeholder.innerHTML = ''; 
+                placeholder.appendChild(img);
+                placeholder.classList.add('filled');
+            } else if (placeholder) {
+                // Optional: Indicate if resonator data/image is missing for a ban
+                console.warn(`displayBans: Missing data for ban ${index}, resonatorId: ${banId}`);
+                placeholder.innerHTML = '?'; // Placeholder for missing data
+            }
+        } else {
+            console.warn(`displayBans: More bans than placeholders. Extra ban: ${banId} at index ${index}`);
+        }
+    });
+    console.log("displayBans: Finished updating ban display");
+}
+
+// --- Function to display picks for a player ---
+function displayPicks(playerRole, playerName, picks = [], gameState) {
+    console.log(`displayPicks called for ${playerRole} (${playerName}), picks:`, picks, "gameState:", gameState);
+    
+    // Get the container for this player's picks
+    const container = document.getElementById(`${playerRole}Picks`);
+    if (!container) {
+        console.warn(`displayPicks: ${playerRole}Picks container not found`);
+        return;
+    }
+
+    const picksContainer = container.querySelector('.picks-container');
+    if (!picksContainer) {
+        console.warn(`displayPicks: picks-container not found within ${playerRole}Picks`);
+        return;
+    }
+
+    const placeholders = picksContainer.querySelectorAll('.pick-placeholder');
+    console.log(`displayPicks: Found ${placeholders.length} pick placeholders for ${playerRole}`);
+
+    // Clear all pick placeholders first
+    placeholders.forEach((p, index) => {
+        console.log(`displayPicks: Clearing placeholder ${index} for ${playerRole}`);
+        p.innerHTML = '';
+        p.classList.remove('filled');
+    });
+
+    // Calculate which picks belong to this player (even indices for player1, odd for player2)
+    const playerIndex = playerRole === 'player1' ? 0 : 1;
+    const playerPicks = picks.filter((_, index) => index % 2 === playerIndex);
+    console.log(`displayPicks: Filtered picks for ${playerRole}:`, playerPicks);
+
+    // Populate placeholders with pick images
+    playerPicks.forEach((pickId, index) => {
+        if (index < placeholders.length) {
+            // Find the resonator data using the pickId
+            const resonator = resonators.find(r => r.id === pickId);
+            const placeholder = placeholders[index];
+            console.log(`displayPicks: Processing pick ${index} for ${playerRole}, resonatorId: ${pickId}, found resonator:`, resonator ? 'yes' : 'no');
+
+            if (resonator && placeholder && resonator.image_button) {
+                console.log(`displayPicks: Adding image for ${resonator.name} to placeholder ${index} for ${playerRole}`);
+                const img = document.createElement('img');
+                img.src = resonator.image_pick;
+                img.alt = resonator.name;
+                img.title = `${playerName}'s Pick: ${resonator.name}`;
 
                 img.style.width = '100%';
                 img.style.height = '100%';
@@ -932,13 +929,15 @@ function displayBans(playerIdentifier, playerName, allBans = [], gameState) {
                 placeholder.innerHTML = '';
                 placeholder.appendChild(img);
                 placeholder.classList.add('filled');
-                playerBanCounter++;
             } else if (placeholder) {
+                console.warn(`displayPicks: Missing data for pick ${index}, resonatorId: ${pickId} for ${playerRole}`);
                 placeholder.innerHTML = '?';
-                console.warn(`Resonator data or image_button not found for banId: ${banId}`);
             }
+        } else {
+            console.warn(`displayPicks: More picks than placeholders for ${playerRole}. Extra pick: ${pickId} at index ${index}`);
         }
     });
+    console.log(`displayPicks: Finished updating pick display for ${playerRole}`);
 }
 
 // --- Function to update character button styles ---
@@ -1177,161 +1176,128 @@ function getFriendlyPhaseName(gameState) {
     }
 }
 
-// --- Update Game Phase UI (including Active Placeholder Highlighting) ---
+// --- Update Game Phase UI (Revised for Complete State) ---
 function updateGamePhaseUI(data) {
-    // Reset timeout flag if it was set and we're getting new state data
     if (isCurrentTurnTimedOut) {
         console.log("DEBUG: Resetting isCurrentTurnTimedOut = false due to new state data arrival.");
         isCurrentTurnTimedOut = false;
     }
 
-    // Get references
+    // Get references to ALL potentially changing elements
     const gameStatusHeader = document.getElementById('gameStatusHeader');
     const currentPhase = document.getElementById('currentPhase');
     const turnIndicator = document.getElementById('turnIndicator');
-    const pickBanSection = document.querySelector('.pick-ban-section');
+    const pickBanSection = document.querySelector('.pick-ban-section'); // Parent for timer/filter/grid/vs
     const timer = document.getElementById('timer');
+    const filterContainer = document.getElementById('filterContainer');
     const characterContainer = document.getElementById('characterContainer');
-    const globalBansSection = document.getElementById('globalBansSection');
+    const globalBansSection = document.getElementById('globalBansSection'); // Separate from pickBanSection
+    const vsImageContainer = document.getElementById('vsImageContainer'); // Inside pickBanSection
     const readyCheckContainer = document.getElementById('readyCheckContainer');
 
-    // Basic check if elements exist
-    if (!gameStatusHeader || !currentPhase || !turnIndicator || !pickBanSection || !timer || !characterContainer || !globalBansSection || !readyCheckContainer) {
+    if (!gameStatusHeader || !currentPhase || !turnIndicator || !pickBanSection || !timer || !filterContainer || !characterContainer || !globalBansSection || !vsImageContainer || !readyCheckContainer) {
         console.error("One or more critical UI elements missing in updateGamePhaseUI");
         return;
     }
 
-    // --- 1. Clear previous active/pending states ---
+    // <<< Add Log >>>
+    console.log("Updating UI for gameState:", data.gameState); 
+
+    // 1. Clear previous active states
     const allPlaceholders = document.querySelectorAll('.pick-placeholder, .ban-placeholder');
     allPlaceholders.forEach(p => {
         p.classList.remove('active', 'pending');
-        // If it wasn't filled by displayPicks/displayBans, ensure content is empty
         if (!p.classList.contains('filled') && !p.querySelector('img')) {
             p.innerHTML = '';
         }
     });
-    updateActivePlayerHighlight(null); // Clear player section highlight initially
+    updateActivePlayerHighlight(null);
 
-    // --- 2. Determine UI visibility based on state ---
+    // 2. Determine states and visibility
     const friendlyPhaseName = getFriendlyPhaseName(data.gameState);
-    let showHeader = true;
-    let showPickBanArea = false;
-    let showReadyCheck = false;
+    const isComplete = (data.gameState === 'complete');
+    const isReadyCheck = (data.gameState === 'ready_check');
+    const isWaiting = (data.gameState === 'waiting');
+    const isActivePickBan = !isComplete && !isReadyCheck && !isWaiting;
+
     let statusMessage = '';
-    let activePlayer = null; // Track which player section to highlight
-    let activePlaceholderSelector = null; // CSS selector for the active placeholder
+    let activePlayer = null;
+    let activePlaceholderSelector = null;
 
-    if (data.gameState === 'ready_check') {
-        showHeader = false;
-        showReadyCheck = true;
-    } else if (data.gameState === 'waiting') {
+    // Set visibility based on state
+    setElementVisibility(gameStatusHeader, !isReadyCheck); // Hide header only during ready check
+    setElementVisibility(pickBanSection, isActivePickBan || isComplete); // Show this section if active or complete
+    setElementVisibility(readyCheckContainer, isReadyCheck);
+    setElementVisibility(globalBansSection, isActivePickBan); // Hide bans when complete or waiting/ready
+
+    // Elements INSIDE pickBanSection:
+    setElementVisibility(timer, isActivePickBan);
+    setElementVisibility(filterContainer, isActivePickBan);
+    setElementVisibility(characterContainer, isActivePickBan);
+    setElementVisibility(vsImageContainer, isComplete); // Show only when complete
+
+    // <<< Add Logs >>>
+    if (isComplete) { 
+        console.log("Game complete! Hiding:", globalBansSection, filterContainer, characterContainer);
+        console.log("Showing:", vsImageContainer);
+    } else if (isActivePickBan) { 
+         console.log("Active pick/ban. Showing:", globalBansSection, filterContainer, characterContainer);
+         console.log("Hiding:", vsImageContainer);
+    }
+    // <<< End Logs >>>
+
+    // 3. Determine status message, active player, active placeholder
+    if (isWaiting) {
         statusMessage = "Waiting for players to join...";
-    } else if (data.gameState === 'complete') {
-        showPickBanArea = true; // Keep showing the final state
+    } else if (isComplete) {
         statusMessage = "Pick/Ban Phase Complete!";
-    } else {
-        // Active pick/ban phases
-        showPickBanArea = true;
-
-        // --- Map gameState to UI text, active player, and next active placeholder ---
-        // This needs to precisely match the state machine flow
+    } else if (isActivePickBan) {
         switch (data.gameState) {
             // Ban Phase 1
-            case 'ban1_p1':
-                statusMessage = "Player 1: Ban 1 Resonator";
-                activePlayer = 'player1';
-                activePlaceholderSelector = '.ban-placeholder[data-ban-index="0"]';
-                break;
-            case 'ban1_p2':
-                statusMessage = "Player 2: Ban 1 Resonator";
-                activePlayer = 'player2';
-                activePlaceholderSelector = '.ban-placeholder[data-ban-index="1"]';
-                break;
+            case 'ban1_p1': statusMessage = "Player 1: Ban 1 Resonator"; activePlayer = 'player1'; activePlaceholderSelector = '.ban-placeholder[data-ban-index="0"]'; break;
+            case 'ban1_p2': statusMessage = "Player 2: Ban 1 Resonator"; activePlayer = 'player2'; activePlaceholderSelector = '.ban-placeholder[data-ban-index="1"]'; break;
             // Pick Phase 1
-            case 'pick1_p1':
-                statusMessage = "Player 1: Pick 1st Resonator";
-                activePlayer = 'player1';
-                activePlaceholderSelector = '.pick-placeholder.player1-pick[data-pick-index="0"]';
-                break;
-            case 'pick1_p2':
-                statusMessage = "Player 2: Pick 1st Resonator";
-                activePlayer = 'player2';
-                activePlaceholderSelector = '.pick-placeholder.player2-pick[data-pick-index="0"]';
-                break;
-            case 'pick1_p1_2':
-                statusMessage = "Player 1: Pick 2nd Resonator";
-                activePlayer = 'player1';
-                activePlaceholderSelector = '.pick-placeholder.player1-pick[data-pick-index="1"]';
-                break;
-            case 'pick1_p2_2':
-                statusMessage = "Player 2: Pick 2nd Resonator";
-                activePlayer = 'player2';
-                activePlaceholderSelector = '.pick-placeholder.player2-pick[data-pick-index="1"]';
-                break;
+            case 'pick1_p1': statusMessage = "Player 1: Pick 1st Resonator"; activePlayer = 'player1'; activePlaceholderSelector = '.pick-placeholder.player1-pick[data-pick-index="0"]'; break;
+            case 'pick1_p2': statusMessage = "Player 2: Pick 1st Resonator"; activePlayer = 'player2'; activePlaceholderSelector = '.pick-placeholder.player2-pick[data-pick-index="0"]'; break;
+            case 'pick1_p1_2': statusMessage = "Player 1: Pick 2nd Resonator"; activePlayer = 'player1'; activePlaceholderSelector = '.pick-placeholder.player1-pick[data-pick-index="1"]'; break;
+            case 'pick1_p2_2': statusMessage = "Player 2: Pick 2nd Resonator"; activePlayer = 'player2'; activePlaceholderSelector = '.pick-placeholder.player2-pick[data-pick-index="1"]'; break;
             // Ban Phase 2
-            case 'ban2_p1':
-                statusMessage = "Player 1: Ban 1 Resonator";
-                activePlayer = 'player1';
-                activePlaceholderSelector = '.ban-placeholder[data-ban-index="2"]';
-                break;
-            case 'ban2_p2':
-                statusMessage = "Player 2: Ban 1 Resonator";
-                activePlayer = 'player2';
-                activePlaceholderSelector = '.ban-placeholder[data-ban-index="3"]';
-                break;
+            case 'ban2_p1': statusMessage = "Player 1: Ban 1 Resonator"; activePlayer = 'player1'; activePlaceholderSelector = '.ban-placeholder[data-ban-index="2"]'; break;
+            case 'ban2_p2': statusMessage = "Player 2: Ban 1 Resonator"; activePlayer = 'player2'; activePlaceholderSelector = '.ban-placeholder[data-ban-index="3"]'; break;
             // Pick Phase 2
-            case 'pick2_p2':
-                statusMessage = "Player 2: Pick Final Resonator";
-                activePlayer = 'player2';
-                activePlaceholderSelector = '.pick-placeholder.player2-pick[data-pick-index="2"]';
-                break;
-            case 'pick2_p1':
-                statusMessage = "Player 1: Pick Final Resonator";
-                activePlayer = 'player1';
-                activePlaceholderSelector = '.pick-placeholder.player1-pick[data-pick-index="2"]';
-                break;
-            default:
-                statusMessage = `Unknown State: ${data.gameState}`;
+            case 'pick2_p2': statusMessage = "Player 2: Pick Final Resonator"; activePlayer = 'player2'; activePlaceholderSelector = '.pick-placeholder.player2-pick[data-pick-index="2"]'; break;
+            case 'pick2_p1': statusMessage = "Player 1: Pick Final Resonator"; activePlayer = 'player1'; activePlaceholderSelector = '.pick-placeholder.player1-pick[data-pick-index="2"]'; break;
+            default: statusMessage = `Unknown State: ${data.gameState}`;
         }
     }
+    // (Ready check state has no specific message here)
 
-    // --- 3. Apply UI visibility ---
-    setElementVisibility(gameStatusHeader, showHeader);
-    setElementVisibility(pickBanSection, showPickBanArea);
-    setElementVisibility(readyCheckContainer, showReadyCheck);
-    setElementVisibility(characterContainer, showPickBanArea && data.gameState !== 'complete'); // Hide grid on complete
-    setElementVisibility(globalBansSection, showHeader || showPickBanArea); // Show bans always except ready check
-
-    // --- 4. Update Header Text ---
-    if (showHeader) {
+    // 4. Update Header Text (if visible)
+    if (!isReadyCheck) {
         currentPhase.textContent = `Phase: ${friendlyPhaseName}`;
         turnIndicator.textContent = statusMessage;
     }
 
-    // --- 5. Highlight Active Player Section ---
+    // 5. Highlight Active Player Section
     updateActivePlayerHighlight(activePlayer);
 
-    // --- 6. Highlight Active Placeholder ---
+    // 6. Highlight Active Placeholder
     if (activePlaceholderSelector) {
         const activeElement = document.querySelector(activePlaceholderSelector);
         if (activeElement && !activeElement.classList.contains('filled')) {
              activeElement.classList.add('active');
         } else if (activeElement) {
-            console.warn("Attempted to activate an already filled placeholder:", activePlaceholderSelector);
+            // console.warn("Attempted to activate an already filled placeholder:", activePlaceholderSelector); // Keep commented unless needed
         } else {
             console.warn("Could not find active placeholder element for selector:", activePlaceholderSelector);
         }
     }
 
-    // --- 7. Handle Timer ---
-    if (showPickBanArea && data.gameState !== 'complete' && data.timerState && data.timerState.isActive && data.timerState.startTime && data.timerState.duration) {
-        console.log(`DEBUG: Timer Active - State: ${data.gameState}, TimerState:`, data.timerState);
+    // 7. Handle Timer
+    if (isActivePickBan && data.timerState && data.timerState.isActive && data.timerState.startTime && data.timerState.duration) {
         startClientSideTimer(data.timerState.startTime, data.timerState.duration);
-        setElementVisibility(timer, true);
     } else {
-        console.log(`DEBUG: Timer Inactive/Hidden - State: ${data.gameState}, TimerState:`, data.timerState);
         stopClientSideTimer();
-        setElementVisibility(timer, false);
         if(timer) timer.textContent = "Time remaining: --";
         if(timer) timer.classList.remove('warning');
     }

@@ -844,28 +844,32 @@ function displayPicks(playerIdentifier, playerName, allPicks = [], gameState) {
     }
 
     let playerPickCounter = 0;
+    // 3. Populate placeholders with picks
     playerPickIndicesInGlobalList.forEach(globalIndex => {
         if (globalIndex < allPicks.length) {
             const pickId = allPicks[globalIndex];
             const resonator = resonators.find(r => r.id === pickId);
-            const placeholder = picksContainer.querySelector(`.pick-placeholder[data-pick-index="${playerPickCounter}"]`);
+            const placeholder = placeholders[playerPickCounter];
 
-            if (resonator && placeholder) {
+            if (resonator && placeholder && resonator.image_pick) { // Changed from resonator.image to resonator.image_pick
                 const img = document.createElement('img');
-                img.src = resonator.image;
+                img.src = resonator.image_pick; // Changed from resonator.image to resonator.image_pick
                 img.alt = resonator.name;
-                img.title = resonator.name;
-                // Make image slightly smaller than placeholder if needed
+                img.title = `Picked: ${resonator.name}`;
+
                 img.style.width = '100%';
                 img.style.height = '100%';
                 img.style.objectFit = 'cover';
-                img.style.borderRadius = 'inherit'; // Inherit border radius
+                img.style.borderRadius = 'inherit';
 
-                placeholder.innerHTML = ''; // Clear first
+                placeholder.innerHTML = '';
                 placeholder.appendChild(img);
-                placeholder.classList.add('filled'); // Add class to indicate it has content
+                placeholder.classList.add('filled');
+                playerPickCounter++;
+            } else if (placeholder) {
+                placeholder.innerHTML = '?';
+                console.warn(`Resonator data or image_pick not found for pickId: ${pickId}`);
             }
-            playerPickCounter++;
         }
     });
 
@@ -877,8 +881,9 @@ function displayPicks(playerIdentifier, playerName, allPicks = [], gameState) {
 }
 
 // --- Function to display banned resonators ---
-function displayBans(bans = []) {
-    const container = document.getElementById('globalBansSection');
+function displayBans(playerIdentifier, playerName, allBans = [], gameState) {
+    const containerId = `${playerIdentifier}Bans`;
+    const container = document.getElementById(containerId);
     if (!container) return;
 
     const bansContainer = container.querySelector('.bans-container');
@@ -886,32 +891,51 @@ function displayBans(bans = []) {
 
     const placeholders = bansContainer.querySelectorAll('.ban-placeholder');
 
-    // 1. Clear all ban placeholders first
+    // 1. Clear all placeholders for this player first
     placeholders.forEach(p => {
-        p.innerHTML = '';
-        p.classList.remove('filled');
+        p.innerHTML = ''; // Remove any existing image or content
+        p.classList.remove('filled'); // Remove filled class if you add one later
     });
 
-    // 2. Populate placeholders with ban images
-    bans.forEach((banId, index) => {
-        if (index < placeholders.length) { // Ensure we don't exceed available placeholders
-            const resonator = resonators.find(r => r.id === banId);
-            const placeholder = placeholders[index]; // Select placeholder by index
+    // 2. Determine which bans belong to this player based on game state order
+    // Note: This mapping depends on the EXACT state transition logic in makeBan.py
+    const playerBanIndicesInGlobalList = [];
+    if (playerIdentifier === 'player1') {
+        playerBanIndicesInGlobalList.push(0); // Corresponds to ban1_p1
+        playerBanIndicesInGlobalList.push(2); // Corresponds to ban1_p1_2
+        playerBanIndicesInGlobalList.push(5); // Corresponds to ban2_p1
+    } else if (playerIdentifier === 'player2') {
+        playerBanIndicesInGlobalList.push(1); // Corresponds to ban1_p2
+        playerBanIndicesInGlobalList.push(3); // Corresponds to ban1_p2_2
+        playerBanIndicesInGlobalList.push(4); // Corresponds to ban2_p2
+    }
 
-            if (resonator && placeholder) {
+    let playerBanCounter = 0;
+    // 3. Populate placeholders with bans
+    playerBanIndicesInGlobalList.forEach(globalIndex => {
+        if (globalIndex < allBans.length) {
+            const banId = allBans[globalIndex];
+            const resonator = resonators.find(r => r.id === banId);
+            const placeholder = placeholders[playerBanCounter];
+
+            if (resonator && placeholder && resonator.image_button) { // Changed from resonator.image to resonator.image_button
                 const img = document.createElement('img');
-                img.src = resonator.image;
+                img.src = resonator.image_button; // Changed from resonator.image to resonator.image_button
                 img.alt = resonator.name;
-                img.title = resonator.name;
-                // Style ban images if needed (similar to pick images)
+                img.title = `Banned: ${resonator.name}`;
+
                 img.style.width = '100%';
                 img.style.height = '100%';
                 img.style.objectFit = 'cover';
                 img.style.borderRadius = 'inherit';
 
-                placeholder.innerHTML = ''; // Clear first
+                placeholder.innerHTML = '';
                 placeholder.appendChild(img);
                 placeholder.classList.add('filled');
+                playerBanCounter++;
+            } else if (placeholder) {
+                placeholder.innerHTML = '?';
+                console.warn(`Resonator data or image_button not found for banId: ${banId}`);
             }
         }
     });
@@ -964,9 +988,9 @@ function createCharacterButtons() {
     resonators.forEach(resonator => {
         const button = document.createElement('button');
         button.classList.add('character-button');
-        button.style.backgroundImage = `url(${resonator.image})`;
+        button.style.backgroundImage = `url(${resonator.image_button})`;
         button.dataset.resonatorId = resonator.id;
-        button.dataset.element = resonator.element; // Add element data attribute
+        button.dataset.element = resonator.element;
         button.title = resonator.name;
         button.addEventListener('click', () => makePick(resonator.id));
         characterContainer.appendChild(button);

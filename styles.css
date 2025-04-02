@@ -1032,3 +1032,33 @@ button {
 .lobby-info.highlight {
     animation: highlight 2s ease-in-out;
 }
+
+/* --- Lobby Notification Styles --- */
+.lobby-notification {
+  position: fixed; /* Keep it fixed on screen */
+  top: 2rem;       /* Position near top */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  background-color: rgba(220, 53, 69, 0.85); /* Reddish background for warning */
+  color: #ffffff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  z-index: 1000; /* Ensure it's on top of other elements */
+  transition: opacity 0.5s ease-out;
+  opacity: 1;
+  font-size: 0.9em;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+/* Override the default .hidden style */
+.lobby-notification.hidden {
+  display: none !important; /* Use !important if needed */
+  opacity: 1; /* Reset opacity when hidden */
+}
+
+/* Style for fading out */
+.lobby-notification.fade-out {
+  opacity: 0;
+}
+/* --- End Lobby Notification Styles --- */

@@ -10,6 +10,7 @@ let clientSideTimerInterval = null; // Variable to hold the interval ID for clie
 const READY_CHECK_INTERVAL = 3000; // Check ready status every 3 seconds
 const GAME_START_COUNTDOWN = 5; // 5 second countdown before game starts
 let isCurrentTurnTimedOut = false; // Flag to track local timeout state
+let previousLobbyState = null; // Track previous lobby state for notifications
 
 // --- Filter Functions ---
 
@@ -112,6 +113,30 @@ function setElementVisibility(element, visible) {
     }
 }
 
+// --- Helper Function to Show Notifications ---
+function showNotification(message, duration = 4000) { // Default 4 seconds
+    const notificationElement = document.getElementById('lobbyNotification');
+    if (notificationElement) {
+        console.log("Showing notification:", message); // Debug log
+        notificationElement.textContent = message;
+        notificationElement.classList.remove('hidden', 'fade-out'); // Make visible, remove fade
+
+        // Add fade-out class shortly before hiding
+        setTimeout(() => {
+           notificationElement.classList.add('fade-out');
+        }, duration - 500); // Start fade 0.5s before hiding
+
+        // Hide completely after duration
+        setTimeout(() => {
+            notificationElement.classList.add('hidden');
+            notificationElement.classList.remove('fade-out'); // Reset fade class
+        }, duration);
+    } else {
+        console.warn("Lobby notification element not found.");
+    }
+}
+
+// --- Helper Function to Show/Hide Lobby View ---
 function showLobbyView(show) {
     setElementVisibility(lobbyView, show);
     setElementVisibility(joinSection, !show);
@@ -660,33 +685,76 @@ async function updateLobbyData() {
             console.error("Error fetching lobby data:", errorData);
             if (response.status === 404) {
                 console.log("Lobby not found on server, clearing local state.");
-                // *** ADD THE POP-UP ALERT HERE ***
-                 alert("The lobby was closed by the organizer."); 
-
-                clearLocalLobbyState(); // Then clear state
-                } else {
+                alert("The lobby was closed by the organizer."); 
+                clearLocalLobbyState(); 
+            } else {
                 // Handle other non-404 errors if needed
                 clearLocalLobbyState();
             }
+            previousLobbyState = null; // Reset previous state on fetch error
             return;
         }
 
-        const data = await response.json();
-        console.log("  Lobby Data:", data);
+        const newLobbyState = await response.json(); // <<< Assign fetched data
+        console.log("   Lobby Data:", newLobbyState);
+
+        // Check if a player slot became empty compared to the previous state
+        if (previousLobbyState && 
+            previousLobbyState.player1 && previousLobbyState.player2 && // BOTH slots were filled previously
+           (!newLobbyState.player1 || !newLobbyState.player2) && // AND at least one slot is empty NOW
+           (previousLobbyState.player1 !== newLobbyState.player1 || previousLobbyState.player2 !== newLobbyState.player2) // AND a name actually changed (ensures it wasn't just a gameState change)
+           ) { 
+
+            let leavingPlayerName = null;
+            let remainingPlayerName = null;
+            let leftPlayerSlotId = null; 
+
+            // Determine who left and who remains
+            if (previousLobbyState.player1 && !newLobbyState.player1) { // P1 left
+                leavingPlayerName = previousLobbyState.player1;
+                remainingPlayerName = newLobbyState.player2; // P2 might remain
+                leftPlayerSlotId = 'player1Name'; 
+            } else if (previousLobbyState.player2 && !newLobbyState.player2) { // P2 left
+                leavingPlayerName = previousLobbyState.player2;
+                remainingPlayerName = newLobbyState.player1; // P1 might remain
+                leftPlayerSlotId = 'player2Name'; 
+            }
+
+            // If we identified someone left...
+            if (leavingPlayerName) {
+                // Show notification to the remaining player or the non-playing organizer
+                const currentRole = localStorage.getItem("role");
+                const currentName = localStorage.getItem("playerName");
+                const isOrganizer = (currentRole === 'organizer'); // Non-playing organizer
+                const isRemainingPlayer = (currentName && currentName === remainingPlayerName);
+
+                // Show if you are the remaining player OR the non-playing organizer viewing the lobby
+                if (isRemainingPlayer || isOrganizer) { 
+                   showNotification(`${leavingPlayerName} left the lobby. Lobby reset.`);
+                }
+
+                // Always force the UI update for the cleared slot visually
+                const leftPlayerNameDiv = document.getElementById(leftPlayerSlotId);
+                if (leftPlayerNameDiv) {
+                    console.log(`Forcing UI update: Clearing ${leftPlayerSlotId}`);
+                    leftPlayerNameDiv.textContent = 'None'; 
+                }
+            }
+        }
 
         // Update lobby info display
         if (lobbyCodeDisplay) lobbyCodeDisplay.textContent = lobbyCode;
         
         // Update game state display
         if (currentGameState) {
-            currentGameState.textContent = data.gameState || 'waiting';
+            currentGameState.textContent = newLobbyState.gameState || 'waiting';
         }
 
         // Update player names
         const player1NameDiv = document.getElementById('player1Name');
         const player2NameDiv = document.getElementById('player2Name');
-        if (player1NameDiv) player1NameDiv.textContent = data.player1 || 'None';
-        if (player2NameDiv) player2NameDiv.textContent = data.player2 || 'None';
+        if (player1NameDiv) player1NameDiv.textContent = newLobbyState.player1 || 'None';
+        if (player2NameDiv) player2NameDiv.textContent = newLobbyState.player2 || 'None';
 
         // Handle ready check UI
         const readyCheckContainer = document.getElementById('readyCheckContainer');
@@ -695,43 +763,43 @@ async function updateLobbyData() {
         const readyButton = document.getElementById('readyButton');
 
         // Show ready check UI if both players are present and game state is ready_check
-        if (data.player1 && data.player2 && data.gameState === 'ready_check') {
+        if (newLobbyState.player1 && newLobbyState.player2 && newLobbyState.gameState === 'ready_check') {
             // Show ready check UI
             if (readyCheckContainer) readyCheckContainer.classList.remove('hidden');
 
             // Update player status displays
-            if (player1Status) player1Status.textContent = `Player 1: ${data.player1Ready ? 'Ready' : 'Not Ready'}`;
-            if (player2Status) player2Status.textContent = `Player 2: ${data.player2Ready ? 'Ready' : 'Not Ready'}`;
+            if (player1Status) player1Status.textContent = `Player 1: ${newLobbyState.player1Ready ? 'Ready' : 'Not Ready'}`;
+            if (player2Status) player2Status.textContent = `Player 2: ${newLobbyState.player2Ready ? 'Ready' : 'Not Ready'}`;
 
             // Update ready button state based on player role
             if (readyButton) {
                 // Check if current user is organizer_player and match to player1 or player2
                 if (currentRole === 'organizer_player') {
                     const organizerName = currentName;
-                    if (organizerName === data.player1) {
+                    if (organizerName === newLobbyState.player1) {
                         // Organizer is player1
-                        readyButton.disabled = data.player1Ready;
-                        readyButton.textContent = data.player1Ready ? 'Waiting...' : 'Ready';
+                        readyButton.disabled = newLobbyState.player1Ready;
+                        readyButton.textContent = newLobbyState.player1Ready ? 'Waiting...' : 'Ready';
                         readyButton.style.display = '';
-                    } else if (organizerName === data.player2) {
+                    } else if (organizerName === newLobbyState.player2) {
                         // Organizer is player2
-                        readyButton.disabled = data.player2Ready;
-                        readyButton.textContent = data.player2Ready ? 'Waiting...' : 'Ready';
+                        readyButton.disabled = newLobbyState.player2Ready;
+                        readyButton.textContent = newLobbyState.player2Ready ? 'Waiting...' : 'Ready';
                         readyButton.style.display = '';
                     } else {
                         // Hide ready button if organizer is not a player
                                     // Organizer name doesn't match P1 or P2 - Hide button
-                        console.error("Organizer_player role mismatch: Name from localStorage doesn't match player slots from backend.", { organizerName, player1: data.player1, player2: data.player2 });
+                        console.error("Organizer_player role mismatch: Name from localStorage doesn't match player slots from backend.", { organizerName, player1: newLobbyState.player1, player2: newLobbyState.player2 });
                         readyButton.disabled = true;
                         readyButton.style.display = 'none';
                     }
                 } else if (currentRole === 'player1') {
-                    readyButton.disabled = data.player1Ready;
-                    readyButton.textContent = data.player1Ready ? 'Waiting...' : 'Ready';
+                    readyButton.disabled = newLobbyState.player1Ready;
+                    readyButton.textContent = newLobbyState.player1Ready ? 'Waiting...' : 'Ready';
                     readyButton.style.display = '';
                 } else if (currentRole === 'player2') {
-                    readyButton.disabled = data.player2Ready;
-                    readyButton.textContent = data.player2Ready ? 'Waiting...' : 'Ready';
+                    readyButton.disabled = newLobbyState.player2Ready;
+                    readyButton.textContent = newLobbyState.player2Ready ? 'Waiting...' : 'Ready';
                     readyButton.style.display = '';
                 } else {
                     // Organizer (not player) or unknown role - Hide button
@@ -745,22 +813,22 @@ async function updateLobbyData() {
         }
 
         // Update game phase UI
-        updateGamePhaseUI(data);
+        updateGamePhaseUI(newLobbyState);
 
         // Update picks and bans
-        if (data.picks) {
-            displayPicks('player1', data.player1, data.picks, data.gameState);
-            displayPicks('player2', data.player2, data.picks, data.gameState);
-        }
-        if (data.bans) {
-            displayBans(data.bans);
-        }
+        displayPicks('player1', newLobbyState.player1, newLobbyState.picks || [], newLobbyState.gameState);
+        displayPicks('player2', newLobbyState.player2, newLobbyState.picks || [], newLobbyState.gameState);
+        displayBans(newLobbyState.bans || []);
 
         // Update character button styles
-        updateCharacterButtonStyles(data.picks || [], data.bans || []);
+        updateCharacterButtonStyles(newLobbyState.picks || [], newLobbyState.bans || []);
+
+        // Update previous state at the very end of successful processing
+        previousLobbyState = newLobbyState; 
 
     } catch (error) {
         console.error("Error in updateLobbyData:", error);
+        // Don't update previous state if an error occurred during processing
     }
 }
 

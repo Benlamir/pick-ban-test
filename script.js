@@ -216,7 +216,7 @@ function clearLocalLobbyState() {
     });
 
     // Reset character button styles (remains the same)
-    updateCharacterButtonStyles([], []);
+    updateCharacterButtonStyles([], [], null);
 }
 
 
@@ -821,7 +821,7 @@ async function updateLobbyData() {
         displayBans(newLobbyState.bans || []);
 
         // Update character button styles
-        updateCharacterButtonStyles(newLobbyState.picks || [], newLobbyState.bans || []);
+        updateCharacterButtonStyles(newLobbyState.picks || [], newLobbyState.bans || [], newLobbyState.gameState);
 
         // Update previous state at the very end of successful processing
         previousLobbyState = newLobbyState; 
@@ -1030,8 +1030,18 @@ function displayPicks(playerIdentifier, playerName, allPicks = [], gameState) { 
 }
 
 // --- Function to update character button styles ---
-function updateCharacterButtonStyles(picks, bans) {
+function updateCharacterButtonStyles(picks, bans, gameState) {
     const buttons = document.querySelectorAll('.character-button');
+    
+    // Disable all buttons during waiting or ready_check states
+    if (gameState === 'waiting' || gameState === 'ready_check') {
+        console.log(`DEBUG: Disabling all buttons because gameState is ${gameState}`);
+        buttons.forEach(button => {
+            button.disabled = true;
+            button.classList.remove('picked-p1', 'picked-p2', 'banned');
+        });
+        return; // Exit early, don't apply pick/ban styles
+    }
     
     // Only re-enable buttons if the current turn hasn't locally timed out
     if (!isCurrentTurnTimedOut) {
@@ -1315,16 +1325,16 @@ function updateGamePhaseUI(data) {
 
     // Set visibility based on state
     setElementVisibility(gameStatusHeader, !isReadyCheck); // Hide header only during ready check
-    setElementVisibility(pickBanSection, isActivePickBan || isComplete); // Show this section if active or complete
+    setElementVisibility(pickBanSection, isActivePickBan || isComplete || isWaiting || isReadyCheck); // Show this section if active, complete, waiting, or ready check
     setElementVisibility(readyCheckContainer, isReadyCheck);
     setElementVisibility(globalBansSection, isActivePickBan); // Hide bans when complete or waiting/ready
     setElementVisibility(shareInstructionElement, showInstruction); // Control instruction text visibility
 
     // Elements INSIDE pickBanSection:
     setElementVisibility(timer, isActivePickBan);
-    setElementVisibility(filterContainer, isActivePickBan);
-    setElementVisibility(characterContainer, isActivePickBan);
-    setElementVisibility(vsImageContainer, isComplete); // Show only when complete
+    setElementVisibility(filterContainer, isActivePickBan || isWaiting || isReadyCheck); // Show filters during waiting and ready check
+    setElementVisibility(characterContainer, isActivePickBan || isWaiting || isReadyCheck); // Show character grid during waiting and ready check
+    setElementVisibility(vsImageContainer, isComplete);
 
     // <<< Add Logs >>>
     if (isComplete) { 

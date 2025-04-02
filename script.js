@@ -1179,7 +1179,78 @@ async function initializePage() {
         console.error("Error initializing page:", error);
         alert("Failed to initialize the page. Please refresh and try again.");
     }
-}
+
+    // --- Add Browser Close / Leave Attempt Logic ---
+    let isWindowClosing = false; // Flag to coordinate events
+
+    window.addEventListener('beforeunload', async (event) => {
+        // Logic to attempt API call before closing
+        const lobbyCode = localStorage.getItem("lobbyCode");
+        const role = localStorage.getItem("role");
+        const playerName = localStorage.getItem("playerName");
+
+        // Only attempt if we have lobby info
+        if (lobbyCode && role && playerName) {
+            console.log('Beforeunload triggered. Attempting cleanup API call...');
+            // Note: We don't prevent default or show a message, just try to send data.
+            isWindowClosing = false; // Reset flag initially
+            try {
+                let response;
+                // Players call /leave
+                if (role === 'player1' || role === 'player2') {
+                    console.log(`  Sending /leave for ${role}`);
+                    response = await fetch(`${apiBaseUrl}/lobbies/${lobbyCode}/leave`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ player: role }),
+                        keepalive: true // IMPORTANT
+                    });
+                } 
+                // Organizers call /delete (Consider if this is desired vs. leaving player slot)
+                else if (role === 'organizer' || role === 'organizer_player') {
+                    console.log(`  Sending /delete for ${role} (${playerName})`);
+                    response = await fetch(`${apiBaseUrl}/lobbies/${lobbyCode}`, {
+                        method: "DELETE",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ playerName: playerName }),
+                        keepalive: true // IMPORTANT
+                    });
+                }
+
+                if (response && response.ok) {
+                     console.log('  beforeunload fetch succeeded (request sent).');
+                     isWindowClosing = true; // Mark that API call was attempted successfully
+                } else if (response) {
+                     console.warn('  beforeunload fetch sent, but received non-OK status:', response.status);
+                     isWindowClosing = true; // Still mark as attempted even if backend fails
+                } else {
+                     console.warn('  beforeunload fetch not applicable for role or no response.');
+                     // Do not set isWindowClosing if no fetch was made
+                }
+            } catch (error) { 
+                console.error("  Error during beforeunload fetch:", error);
+                // Do not set isWindowClosing on fetch network error
+            }
+        } else {
+             console.log('Beforeunload triggered, but no lobby info found in localStorage.');
+        }
+        // We don't explicitly return anything here to allow the browser default behavior
+    });
+
+    window.addEventListener('unload', (event) => {
+        // Clear localStorage ONLY if the beforeunload fetch was successfully initiated
+        if (isWindowClosing) { 
+            console.log('Unload event: Clearing localStorage because API call was attempted.');
+            localStorage.removeItem("lobbyCode");
+            localStorage.removeItem("role");
+            localStorage.removeItem("playerName");
+        } else {
+             console.log('Unload event: Not clearing localStorage (API call not attempted or failed).');
+        }
+    });
+    // --- End Browser Close / Leave Attempt Logic ---
+
+} // Closing brace for initializePage function
 
 // --- Timer Management Functions ---
 function startClientSideTimer(startTime, duration, selector) {

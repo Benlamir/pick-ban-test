@@ -44,22 +44,28 @@ def lambda_handler(event, context):
         # Generate a unique lobby code (using UUID and timestamp for extra uniqueness)
         lobby_code = f"{uuid.uuid4().hex[:4]}-{int(time.time() * 1000) % 10000:04d}"
 
-        # --- Step 3: Store the lobby in DynamoDB, including organizerName ---
+        # --- Step 3: Calculate TTL ---
+        current_timestamp = int(time.time())
+        # Set TTL duration (24 hours in seconds)
+        ttl_duration_seconds = 24 * 60 * 60 
+        expiration_timestamp = current_timestamp + ttl_duration_seconds
+
+        # --- Step 4: Store the lobby in DynamoDB, including organizerName and TTL ---
         table.put_item(
             Item={
                 'lobbyCode': lobby_code,
-                # 'organizer': 'true', # REMOVED: organizerName is now the indicator
-                'organizerName': organizer_name, # <-- ADDED organizerName attribute
-                'createdAt': int(time.time()),  # Added a creation timestamp example
+                'organizerName': organizer_name,
+                'createdAt': current_timestamp,
                 'player1': '',
                 'player2': '',
-                'gameState': 'waiting'
+                'gameState': 'waiting',
+                'ttl': expiration_timestamp  # Add TTL attribute
             },
             # ConditionExpression to prevent overwriting an existing lobby (unlikely, but good practice)
             ConditionExpression='attribute_not_exists(lobbyCode)'
         )
 
-        # --- Step 4: Return Success Response ---
+        # --- Step 5: Return Success Response ---
         return {
             'statusCode': 200,
             'headers': {

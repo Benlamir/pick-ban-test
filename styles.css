@@ -7,7 +7,13 @@
 }
 
 body {
-    background: linear-gradient(135deg, #1a1c2e, #2a2d4a);
+    /* Background image with dark overlay */
+    background: 
+        linear-gradient(rgba(26, 28, 46, 0.9), rgba(42, 45, 74, 0.95)), 
+        url('https://pick-ban-test-2023-10-27.s3.us-east-1.amazonaws.com/images/other/thumb-1920-1355318+(1).webp') 
+        center center / cover 
+        no-repeat 
+        fixed;
     color: #ffffff;
     min-height: 100vh;
     padding: 2rem;

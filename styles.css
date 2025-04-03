@@ -337,7 +337,7 @@ button {
 
 #characterContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 100px); /* Use fixed 100px columns */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
     gap: 1rem; /* Adjust as needed */
     padding: 1rem; /* Adjust as needed */
     background: rgba(0, 0, 0, 0.2); /* Keep existing style */
@@ -346,6 +346,7 @@ button {
     box-sizing: border-box; /* Include padding/border in the element's total width */
     max-height: 400px;   /* Set a max height */
     overflow-y: auto;    /* Add vertical scrollbar if content exceeds max-height */
+    scrollbar-gutter: stable;
     /*padding-right: 0.5rem; /* Add space for scrollbar */
 }
 

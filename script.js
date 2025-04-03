@@ -24,8 +24,9 @@ function createFilterControls() {
     // Clear any existing filters
     filterContainer.innerHTML = '';
 
-    // Get unique element types from resonators data
-    const elements = [...new Set(resonators.map(r => r.element))].sort();
+    // Get unique element types from resonators data (handling arrays)
+    const allElements = resonators.flatMap(r => r.element || []); // Get all elements, use empty array if missing
+    const elements = [...new Set(allElements)].sort();
 
     // 1. Create "All" Filter Tab
     const allFilter = document.createElement('div');
@@ -71,9 +72,9 @@ function handleFilterClick(event) {
 function applyFilter(filterValue) {
     const buttons = document.querySelectorAll('#characterContainer .character-button');
     buttons.forEach(button => {
-        const buttonElement = button.dataset.element;
-        if (filterValue === 'All' || buttonElement === filterValue) {
-            button.style.display = ''; // Show button (reset to default display)
+        const buttonElements = button.dataset.element ? button.dataset.element.split(',') : []; // Split into array
+        if (filterValue === 'All' || buttonElements.includes(filterValue)) { // Check if array includes filter value
+            button.style.display = ''; // Show button
         } else {
             button.style.display = 'none'; // Hide button
         }
@@ -1088,7 +1089,8 @@ function createCharacterButtons() {
         button.classList.add('character-button');
         button.style.backgroundImage = `url(${resonator.image_button})`;
         button.dataset.resonatorId = resonator.id;
-        button.dataset.element = resonator.element;
+        // Join element array into a comma-separated string for the data attribute
+        button.dataset.element = (resonator.element || []).join(',');
         button.title = resonator.name;
         button.addEventListener('click', () => makePick(resonator.id));
         characterContainer.appendChild(button);

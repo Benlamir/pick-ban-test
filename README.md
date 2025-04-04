@@ -1,11 +1,11 @@
-# Wuthering Waves - AWS Serverless Pick/Ban Lobby
+# 🎮 Wuthering Waves - AWS Serverless Pick/Ban Lobby
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 A fan-made web-based system simulating a "Pick/Ban" phase for the game Wuthering Waves. While the game is primarily a solo experience, this tool allows friends or communities to create custom challenges (e.g., banning strong characters before boss fights) by adding a team drafting phase. It is built using AWS serverless components and Vanilla JavaScript.
 
 **Note:** This project was developed primarily using AI tools as an experiment in AI-assisted development by someone who is **not a developer or programmer**. See the [Development Process & AI Usage](#development-process--ai-usage) section for details.
 
-## Table of Contents
+## 🗺️ Table of Contents
 
 - [Overview](#overview)
 - [Features](#features)
@@ -27,14 +27,14 @@ A fan-made web-based system simulating a "Pick/Ban" phase for the game Wuthering
 - [License](#license) 
 - [Acknowledgements](#acknowledgements) 
 
-## Overview
+## ℹ️ Overview
 
 This project provides a functional simulation of the Wuthering Waves Resonator pick/ban phase, intended for community use (e.g., tournaments, friend challenges) rather than reflecting an in-game competitive mode. It allows an organizer to create a lobby, two players to join, perform a ready check, and proceed through a timed, multi-stage pick/ban sequence. The backend is powered entirely by AWS serverless services for scalability and cost-efficiency, while the frontend uses plain HTML, CSS, and JavaScript.
 
 *(Added Note)*
 This project represents an experiment in leveraging AI for software development, particularly for someone without prior programming or AWS experience. See the [Development Process & AI Usage](#development-process--ai-usage) section for more details on the tools and process used.
 
-## Features
+## ✨ Features
 
 * **Lobby Creation & Joining:** Organizers create lobbies with unique codes; players join using the code.
 * **Organizer Role:** Organizer can create, delete, reset the lobby, and optionally join as a player.
@@ -48,11 +48,11 @@ This project represents an experiment in leveraging AI for software development,
 * **Automatic Cleanup:** DynamoDB TTL automatically removes inactive lobbies after a set period (e.g., 24 hours).
 * **Basic Disconnect Handling:** `beforeunload` event attempts cleanup (best-effort).
 
-## Architecture
+## 🏗️ Architecture
 
 This project uses a serverless backend hosted on AWS and a static frontend built with Vanilla JavaScript.
 
-![Architecture Diagram](images/wuwabanpick.drawio.png)
+![Architecture Diagram](images/wuwabanpick.drawio.png) 
 
 ### Backend (AWS Serverless)
 
@@ -102,7 +102,7 @@ The frontend is a single-page application built without any frameworks:
 9.  `getLobby.py` Lambda retrieves the current state from DynamoDB and returns it.
 10. `script.js` receives the state and updates the HTML elements (player names, picks, bans, game phase text, timer display, button styles) accordingly.
 
-## Development Process & AI Usage 
+## 🤖 Development Process & AI Usage 
 This project serves as a practical experiment exploring the capabilities of AI in software development, particularly for an individual starting with no prior background in programming or AWS cloud services.
 
 **Transparency:**
@@ -118,9 +118,9 @@ This project serves as a practical experiment exploring the capabilities of AI i
 
 This context is provided for transparency regarding the project's origins and development methodology.
 
-## Live Demo
+## 🚀 Live Demo
 
-## Setup & Deployment
+## 🛠️ Setup & Deployment
 
 ### Prerequisites
 
@@ -176,7 +176,7 @@ This project's backend was deployed manually using the **AWS Management Console*
     * `S3_FILE_KEY`: The key (path) to `resonators.json` in your S3 bucket (usually just `resonators.json` if it's in the root).
 * **(Optional) `resonators.json`:** Update with new characters or image URLs as needed. Must be re-uploaded to S3.
 
-## Usage
+## ▶️ Usage
 
 1.  Navigate to the CloudFront URL.
 2.  **Organizer:** Enter a name and click "Create New Lobby".
@@ -190,7 +190,7 @@ This project's backend was deployed manually using the **AWS Management Console*
 10. **Organizer Controls:** Use "Reset Lobby" to clear picks/bans and return to Ready Check, or "Delete Lobby" to remove it entirely.
 11. **Player Controls:** Use "Leave Lobby" to exit (this also resets the lobby state).
 
-## Known Issues & Limitations
+## ⚠️ Known Issues & Limitations
 
 
 * **Polling Delay:** UI updates are not instantaneous due to the 3-second polling interval.
@@ -199,7 +199,7 @@ This project's backend was deployed manually using the **AWS Management Console*
 * **Mobile Responsiveness:** CSS requires further work for optimal display on small screens.
 * **Stateless Complexity:** Managing game flow across stateless Lambdas adds complexity compared to stateful connections (e.g., WebSockets).
 
-## Future Improvements
+## 💡 Future Improvements
 
 * Implement WebSockets for true real-time updates.
 * Explore AWS Step Functions as a potentially more robust and faster alternative to EventBridge Scheduler for handling timeouts **(relevant for the current polling architecture)**.
@@ -207,7 +207,7 @@ This project's backend was deployed manually using the **AWS Management Console*
 * Improve mobile CSS layout.
 * Allow customization of timer durations, number of picks/bans,etc...
 
-## Contributing
+## 🙌 Contributing
 
 As this project was primarily an experiment in AI-assisted development by a non-programmer, I'm not actively seeking direct code contributions (Pull Requests) at this time.
 
@@ -218,11 +218,11 @@ However, I would be very interested to hear feedback from players who find this 
 
 Please feel free to **open an issue** on the GitHub repository to share your thoughts.
 
-## License
+## 📜 License
 
 This project is licensed under the terms of the MIT License. You can view the full license text here: [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
 
-## Acknowledgements
+## 🙏 Acknowledgements
 
 * Wuthering Waves for the game concept.
 * AI Tools (e.g., Gemini, Cursor AI) for assistance in architecture, coding, and debugging.

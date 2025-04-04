@@ -52,7 +52,8 @@ This project represents an experiment in leveraging AI for software development,
 
 This project uses a serverless backend hosted on AWS and a static frontend built with Vanilla JavaScript.
 
-*(Consider adding an architecture diagram image here if you have one)*
+![Architecture Diagram](images/wuwabanpick.drawio.png)
+
 ### Backend (AWS Serverless)
 
 The backend is composed of several managed AWS services working together:

@@ -4,7 +4,8 @@
 A fan-made web-based system simulating a "Pick/Ban" phase for the game Wuthering Waves. While the game is primarily a solo experience, this tool allows friends or communities to create custom challenges (e.g., banning strong characters before boss fights) by adding a team drafting phase. It is built using AWS serverless components and Vanilla JavaScript.
 
 **Note:** This project was developed primarily using AI tools as an experiment in AI-assisted development by someone who is **not a developer or programmer**. See the [Development Process & AI Usage](#development-process--ai-usage) section for details.
-![Application Screenshot](images/Capture%20d%E2%80%99%C3%A9cran%202025-04-05%20115836.png)
+
+![Application Screenshot](images/Capture d’écran 2025-04-05 115836.webp)
 
 ## 🗺️ Table of Contents
 

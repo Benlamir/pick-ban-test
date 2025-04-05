@@ -120,6 +120,9 @@ This context is provided for transparency regarding the project's origins and de
 
 ## 🚀 Live Demo
 
+You can try the live application here:
+[**Wuthering Waves Pick/Ban Lobby**](https://d23g90uwgh8nfk.cloudfront.net/)
+
 ## 🛠️ Setup & Deployment
 
 ### Prerequisites

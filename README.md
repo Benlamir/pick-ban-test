@@ -5,7 +5,7 @@ A fan-made web-based system simulating a "Pick/Ban" phase for the game Wuthering
 
 **Note:** This project was developed primarily using AI tools as an experiment in AI-assisted development by someone who is **not a developer or programmer**. See the [Development Process & AI Usage](#development-process--ai-usage) section for details.
 
-![Application Screenshot](images/Capture d’écran 2025-04-05 115836.webp)
+![Application Screenshot](images/Capture d’écran 2025-04-05 115836.png)
 
 ## 🗺️ Table of Contents
 

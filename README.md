@@ -55,7 +55,6 @@ This project represents an experiment in leveraging AI for software development,
 This project uses a serverless backend hosted on AWS and a static frontend built with Vanilla JavaScript.
 
 ![Architecture Diagram](images/wuwabanpick.drawio.png)
-_(Note: Ensure you have uploaded the exported diagram image to the 'images' folder in your repository with this exact filename: wuwabanpick.drawio.png)_
 
 ### Backend (AWS Serverless)
 
